@@ -25,7 +25,7 @@
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", "Segoe UI", sans-serif;
       font-size: 14px;
-      line-height: 1.72;
+      line-height: 1.68;
     }
 
     main {
@@ -162,88 +162,87 @@
   <main>
     <header>
       <h1>AIDC / Chthonia Platform</h1>
-      <div class="subtitle">Whole Picture 與我的工程價值</div>
+      <div class="subtitle">平台概述與參與範圍</div>
       <div class="meta"><a href="../index.html">← 回到履歷</a></div>
     </header>
 
     <section class="summary">
       <p>
-        我在 AIDC / Chthonia 裡的價值，不只是完成單一功能，而是理解整個 AI Data Center 平台從產品介面、資源治理、GitOps 交付、Kubernetes runtime 到可靠性驗收的 whole picture，並負責把其中的核心平台能力落地成可部署、可驗證、可維運的系統。
+        本頁整理 AIDC / Chthonia 平台的產品定位、主要模組、交付流程與驗證範圍，並說明我在其中參與的工程工作。內容重點放在平台整體脈絡，以及我負責落地的 Kubernetes、GitOps、IAM、IDC 管理與可靠性相關工作。
       </p>
     </section>
 
     <section>
       <h2>平台定位</h2>
       <p>
-        AIDC / Chthonia 不是單純的 Kubernetes 部署專案，而是一個將 GPU / IDC / Container / Quota / User / Project 等資源產品化的 AI Data Center 平台。平台前台包含兩個主要使用介面：Admin Console 與 Service Portal。
+        AIDC / Chthonia 是一套面向 AI Data Center 的內部平台，目標是將 GPU、IDC、Cluster、Container、Quota、User 與 Project 等資源整理成可管理、可部署、可觀測的服務。
       </p>
       <p>
-        Admin Console 提供平台管理員管理組織、部門、專案、成員、IDC、Cluster、Quota、Billing 與系統設定；Service Portal 則提供 AI Researcher / MLOps 使用者查看 Project、Quota、Container、資源狀態與服務入口。
+        平台包含兩個主要介面：Admin Console 與 Service Portal。Admin Console 供平台管理員管理組織、部門、專案、成員、IDC、Cluster、Quota、Billing 與系統設定；Service Portal 供 AI Researcher / MLOps 使用者查看所屬 Project、Quota、Container、資源狀態與服務入口。
       </p>
     </section>
 
     <section>
-      <h2>我負責創造的價值</h2>
+      <h2>參與範圍</h2>
       <div class="grid">
         <div class="card">
-          <h3>產品與資源治理</h3>
-          <p>開發 IDC、Organization、Container 等資源管理模組，支援資源 CRUD、相依性檢查、Portal 整合與 cluster 連線驗證。</p>
+          <h3>資源管理模組</h3>
+          <p>參與 IDC、Organization、Container 等資源管理功能，包含 CRUD、相依性檢查、Portal 整合與 cluster 連線驗證。</p>
         </div>
         <div class="card">
-          <h3>Kubernetes Runtime 與部署</h3>
-          <p>負責 Kubernetes 基礎設施與多環境部署，支援 Proxmox、AWS 與本機 MicroK8s，讓團隊可快速部署、驗證與展示平台功能。</p>
+          <h3>Kubernetes 與多環境部署</h3>
+          <p>建置與維護 Kubernetes 相關部署環境，支援 Proxmox、AWS 與本機 MicroK8s，協助團隊進行功能驗證與展示。</p>
         </div>
         <div class="card">
           <h3>GitOps 交付流程</h3>
-          <p>建立 portal / portal-helm 分離的部署模式，CI 產出版本化 image，CD 透過 Argo CD 手動選版與同步，避免 GPU 測試環境被不必要部署佔用。</p>
+          <p>參與 portal / portal-helm 分離的部署流程。CI 產出版本化 image，CD 透過 Argo CD 進行手動選版與同步。</p>
         </div>
         <div class="card">
-          <h3>核心服務與可靠性</h3>
-          <p>協助整合 IAM / SSO、API Gateway、儲存、資料庫與監控能力，並納入 HA、資料完整性與 GPU 通訊效能驗證。</p>
+          <h3>核心服務整合</h3>
+          <p>協助整合 IAM / SSO、API Gateway、儲存、資料庫與監控相關能力，支援平台權限控管、服務入口與維運觀測。</p>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>使用者價值與工程設計</h2>
+      <h2>平台脈絡</h2>
       <div class="mermaid-wrap">
         <pre class="mermaid">
 flowchart LR
-  subgraph UserNeed["使用者與平台需求"]
-    AdminNeed["平台管理員需要治理<br/>Org / Dept / Project / Member<br/>IDC / Cluster / Quota / Billing"]
-    AIUserNeed["AI 使用者需要自助查看<br/>Project / Quota / Container<br/>資源狀態與服務入口"]
-    OpsNeed["GPU 環境昂貴且共享<br/>不能被每次 merge 自動覆蓋"]
-    ReliabilityNeed["AI 平台不只要能部署<br/>還要能驗證 HA / 資料完整性 / GPU 通訊效能"]
+  subgraph Needs["需求與限制"]
+    AdminNeed["管理員需要治理<br/>Org / Dept / Project / Member<br/>IDC / Cluster / Quota / Billing"]
+    UserNeed["使用者需要查看<br/>Project / Quota / Container<br/>資源狀態與服務入口"]
+    DeployNeed["GPU 環境資源有限且共享<br/>部署需保留人工控制點"]
+    ReliabilityNeed["平台需驗證<br/>HA / 資料完整性 / GPU 通訊效能"]
   end
 
-  subgraph Product["產品能力"]
-    AdminConsole["Admin Console<br/>平台治理入口"]
-    ServicePortal["Service Portal<br/>使用者自助入口"]
+  subgraph Product["產品介面"]
+    AdminConsole["Admin Console"]
+    ServicePortal["Service Portal"]
   end
 
-  subgraph MyValue["我負責創造的工程價值"]
-    Runtime["K8s / MicroK8s / AWS Demo Environment"]
-    Core["IDC CRUD API<br/>Resource Dependency Check"]
-    Identity["Keycloak / IAM / SSO<br/>Token / Session Management"]
-    GitOps["Helm / GitOps / Argo CD<br/>版本化 Image + 手動選版"]
-    Infra["MinIO / Kong / CNPG PoC<br/>Monitoring Stack"]
+  subgraph Engineering["工程範圍"]
+    Runtime["Kubernetes / MicroK8s / AWS"]
+    Core["IDC API / Resource Dependency Check"]
+    Identity["Keycloak / IAM / SSO"]
+    GitOps["Helm / Argo CD / Versioned Image"]
+    Infra["MinIO / Kong / CNPG PoC / Monitoring"]
   end
 
-  subgraph Validation["驗收與可靠性"]
+  subgraph Validation["驗證項目"]
     UAT["End-to-End UAT"]
     HA["Cluster HA / VM Recovery"]
     Data["Data Integrity / State Continuity"]
-    NCCL["NCCL / RDMA<br/>GPU 通訊效能驗證"]
+    NCCL["NCCL / RDMA GPU Test"]
   end
 
   AdminNeed --> AdminConsole
-  AIUserNeed --> ServicePortal
+  UserNeed --> ServicePortal
+  DeployNeed --> GitOps
+  ReliabilityNeed --> Validation
 
   AdminConsole --> Core
   ServicePortal --> Core
-
-  OpsNeed --> GitOps
-  ReliabilityNeed --> Validation
 
   Core --> Runtime
   Identity --> Runtime
@@ -259,16 +258,19 @@ flowchart LR
     </section>
 
     <section>
-      <h2>交付流程設計</h2>
+      <h2>交付流程</h2>
       <p>
-        由於 GPU 環境昂貴且共享，平台交付流程不能盲目採用全自動部署。我參與設計以 portal repo 負責 application code 與 image 產出，portal-helm repo 負責 Helm chart 與部署設定的分離模式。CI 負責產出版本化 image，CD 則透過 Argo CD 手動選版與同步，讓團隊可以快速切換測試版本，同時避免每次 merge 都覆蓋或佔用 GPU 測試環境。
+        平台採用 application repo 與 deployment repo 分離的方式：portal repo 負責應用程式程式碼與 image 產出；portal-helm repo 負責 Helm chart 與部署設定。當 feat/* 合併至 dev 後，CI pipeline 會建立版本化 image 並推送至 GHCR。
+      </p>
+      <p>
+        由於 GPU 測試環境資源有限且屬共享環境，實際部署透過 Argo CD 手動選版與同步。此方式可保留部署控制點，並讓團隊在需要時切換不同測試版本。
       </p>
     </section>
 
     <section>
-      <h2>可靠性與驗收</h2>
+      <h2>可靠性與驗證</h2>
       <p>
-        AIDC 的價值不只在於服務能跑起來，而是要能被驗收。平台驗收涵蓋功能測試、端對端 UAT、Cluster HA、VM 故障恢復、資料完整性、GPU 算力狀態接續，以及 NCCL / RDMA GPU 通訊效能測試。這代表平台不只是一般 Web Portal，而是具備 AI 訓練工作負載支援能力與基礎設施可靠性驗證的內部 AI Data Center 平台。
+        平台驗收不只包含功能測試，也涵蓋端對端 UAT、Cluster HA、VM 故障恢復、資料完整性、GPU 算力狀態接續，以及 NCCL / RDMA GPU 通訊效能測試。這些測試用於確認平台在功能、部署、恢復與 AI 工作負載支援上的基本可用性。
       </p>
     </section>
   </main>
