@@ -86,6 +86,15 @@
       margin-top: 5px;
     }
 
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
     .headline {
       margin-bottom: 10px;
       color: var(--accent);
@@ -138,6 +147,12 @@
 
     .project-title {
       color: var(--text);
+      font-weight: 700;
+    }
+
+    .project-link {
+      margin: 8px 0 14px;
+      font-size: 13px;
       font-weight: 700;
     }
 
@@ -202,6 +217,10 @@
       .company {
         margin-top: 8px;
         padding: 6px 8px;
+      }
+
+      .project-link {
+        display: none;
       }
 
       .skill-row {
@@ -286,6 +305,7 @@
         <li>開發 IDC、Organization、Container 等資源管理模組，支援資源 CRUD、相依性檢查、Portal 整合與 cluster 連線驗證。</li>
         <li>協助整合 IAM / SSO、API Gateway、儲存、資料庫與監控能力，支援平台權限控管、服務入口與維運觀測。</li>
       </ul>
+      <p class="project-link"><a href="./projects/aidc.html">查看 AIDC 平台 whole picture 與我的工程價值 →</a></p>
 
       <h3>SRBG 資料平台與排程管理系統｜2023/11 – 2025/09</h3>
       <ul>
