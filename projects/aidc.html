@@ -187,7 +187,7 @@
       <div class="grid">
         <div class="card">
           <h3>資源管理模組</h3>
-          <p>參與 IDC、Organization、Container 等資源管理功能，包含 CRUD、相依性檢查、Portal 整合與 cluster 連線驗證。</p>
+          <p>參與 IDC、Cluster、Container 等資源管理功能，包含 CRUD、相依性檢查、Portal 整合與 cluster 連線驗證。</p>
         </div>
         <div class="card">
           <h3>Kubernetes 與多環境部署</h3>
@@ -223,7 +223,7 @@ flowchart LR
 
   subgraph Engineering["工程範圍"]
     Runtime["Kubernetes / MicroK8s / AWS"]
-    Core["IDC API / Resource Dependency Check"]
+    Core["IDC / Cluster / Container API<br/>Resource Dependency Check"]
     Identity["Keycloak / IAM / SSO"]
     GitOps["Helm / Argo CD / Versioned Image"]
     Infra["MinIO / Kong / CNPG PoC / Monitoring"]
