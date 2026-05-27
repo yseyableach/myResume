@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIDC / Chthonia Platform｜Jay Yu</title>
+  <style>
+    :root {
+      --text: #1f2933;
+      --muted: #52606d;
+      --line: #d9e2ec;
+      --accent: #0f766e;
+      --accent-soft: #e6f4f1;
+      --paper: #ffffff;
+      --page: #f5f7fa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.72;
+    }
+
+    main {
+      width: min(980px, calc(100% - 32px));
+      margin: 32px auto;
+      padding: 40px 48px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+    }
+
+    header {
+      padding-bottom: 22px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 24px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-size: 30px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin: 28px 0 12px;
+      color: var(--accent);
+      font-size: 18px;
+      line-height: 1.3;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li + li {
+      margin-top: 5px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .subtitle {
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      color: var(--muted);
+    }
+
+    .summary {
+      padding: 14px 16px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      margin: 18px 0 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: #ffffff;
+    }
+
+    .card h3 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    .mermaid-wrap {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        width: 100%;
+        margin: 0;
+        padding: 28px 22px;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>AIDC / Chthonia Platform</h1>
+      <div class="subtitle">Whole Picture 與我的工程價值</div>
+      <div class="meta"><a href="../index.html">← 回到履歷</a></div>
+    </header>
+
+    <section class="summary">
+      <p>
+        我在 AIDC / Chthonia 裡的價值，不只是完成單一功能，而是理解整個 AI Data Center 平台從產品介面、資源治理、GitOps 交付、Kubernetes runtime 到可靠性驗收的 whole picture，並負責把其中的核心平台能力落地成可部署、可驗證、可維運的系統。
+      </p>
+    </section>
+
+    <section>
+      <h2>平台定位</h2>
+      <p>
+        AIDC / Chthonia 不是單純的 Kubernetes 部署專案，而是一個將 GPU / IDC / Container / Quota / User / Project 等資源產品化的 AI Data Center 平台。平台前台包含兩個主要使用介面：Admin Console 與 Service Portal。
+      </p>
+      <p>
+        Admin Console 提供平台管理員管理組織、部門、專案、成員、IDC、Cluster、Quota、Billing 與系統設定；Service Portal 則提供 AI Researcher / MLOps 使用者查看 Project、Quota、Container、資源狀態與服務入口。
+      </p>
+    </section>
+
+    <section>
+      <h2>我負責創造的價值</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>產品與資源治理</h3>
+          <p>開發 IDC、Organization、Container 等資源管理模組，支援資源 CRUD、相依性檢查、Portal 整合與 cluster 連線驗證。</p>
+        </div>
+        <div class="card">
+          <h3>Kubernetes Runtime 與部署</h3>
+          <p>負責 Kubernetes 基礎設施與多環境部署，支援 Proxmox、AWS 與本機 MicroK8s，讓團隊可快速部署、驗證與展示平台功能。</p>
+        </div>
+        <div class="card">
+          <h3>GitOps 交付流程</h3>
+          <p>建立 portal / portal-helm 分離的部署模式，CI 產出版本化 image，CD 透過 Argo CD 手動選版與同步，避免 GPU 測試環境被不必要部署佔用。</p>
+        </div>
+        <div class="card">
+          <h3>核心服務與可靠性</h3>
+          <p>協助整合 IAM / SSO、API Gateway、儲存、資料庫與監控能力，並納入 HA、資料完整性與 GPU 通訊效能驗證。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>使用者價值與工程設計</h2>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart LR
+  subgraph UserNeed["使用者與平台需求"]
+    AdminNeed["平台管理員需要治理<br/>Org / Dept / Project / Member<br/>IDC / Cluster / Quota / Billing"]
+    AIUserNeed["AI 使用者需要自助查看<br/>Project / Quota / Container<br/>資源狀態與服務入口"]
+    OpsNeed["GPU 環境昂貴且共享<br/>不能被每次 merge 自動覆蓋"]
+    ReliabilityNeed["AI 平台不只要能部署<br/>還要能驗證 HA / 資料完整性 / GPU 通訊效能"]
+  end
+
+  subgraph Product["產品能力"]
+    AdminConsole["Admin Console<br/>平台治理入口"]
+    ServicePortal["Service Portal<br/>使用者自助入口"]
+  end
+
+  subgraph MyValue["我負責創造的工程價值"]
+    Runtime["K8s / MicroK8s / AWS Demo Environment"]
+    Core["IDC CRUD API<br/>Resource Dependency Check"]
+    Identity["Keycloak / IAM / SSO<br/>Token / Session Management"]
+    GitOps["Helm / GitOps / Argo CD<br/>版本化 Image + 手動選版"]
+    Infra["MinIO / Kong / CNPG PoC<br/>Monitoring Stack"]
+  end
+
+  subgraph Validation["驗收與可靠性"]
+    UAT["End-to-End UAT"]
+    HA["Cluster HA / VM Recovery"]
+    Data["Data Integrity / State Continuity"]
+    NCCL["NCCL / RDMA<br/>GPU 通訊效能驗證"]
+  end
+
+  AdminNeed --> AdminConsole
+  AIUserNeed --> ServicePortal
+
+  AdminConsole --> Core
+  ServicePortal --> Core
+
+  OpsNeed --> GitOps
+  ReliabilityNeed --> Validation
+
+  Core --> Runtime
+  Identity --> Runtime
+  GitOps --> Runtime
+  Infra --> Runtime
+
+  Runtime --> UAT
+  Runtime --> HA
+  Runtime --> Data
+  Runtime --> NCCL
+        </pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>交付流程設計</h2>
+      <p>
+        由於 GPU 環境昂貴且共享，平台交付流程不能盲目採用全自動部署。我參與設計以 portal repo 負責 application code 與 image 產出，portal-helm repo 負責 Helm chart 與部署設定的分離模式。CI 負責產出版本化 image，CD 則透過 Argo CD 手動選版與同步，讓團隊可以快速切換測試版本，同時避免每次 merge 都覆蓋或佔用 GPU 測試環境。
+      </p>
+    </section>
+
+    <section>
+      <h2>可靠性與驗收</h2>
+      <p>
+        AIDC 的價值不只在於服務能跑起來，而是要能被驗收。平台驗收涵蓋功能測試、端對端 UAT、Cluster HA、VM 故障恢復、資料完整性、GPU 算力狀態接續，以及 NCCL / RDMA GPU 通訊效能測試。這代表平台不只是一般 Web Portal，而是具備 AI 訓練工作負載支援能力與基礎設施可靠性驗證的內部 AI Data Center 平台。
+      </p>
+    </section>
+  </main>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+  </script>
+</body>
+</html>
