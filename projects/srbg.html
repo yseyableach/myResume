@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SRBG / S360 ETL Job Management｜Jay Yu</title>
+  <style>
+    :root {
+      --text: #1f2933;
+      --muted: #52606d;
+      --line: #d9e2ec;
+      --accent: #0f766e;
+      --accent-soft: #e6f4f1;
+      --paper: #ffffff;
+      --page: #f5f7fa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.68;
+    }
+
+    main {
+      width: min(980px, calc(100% - 32px));
+      margin: 32px auto;
+      padding: 40px 48px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+    }
+
+    header {
+      padding-bottom: 22px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 24px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-size: 30px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin: 28px 0 12px;
+      color: var(--accent);
+      font-size: 18px;
+      line-height: 1.3;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li + li {
+      margin-top: 5px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .subtitle {
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      color: var(--muted);
+    }
+
+    .summary {
+      padding: 14px 16px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      margin: 18px 0 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: #ffffff;
+    }
+
+    .card h3 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    .mermaid-wrap {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        width: 100%;
+        margin: 0;
+        padding: 28px 22px;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>SRBG / S360 ETL Job Management</h1>
+      <div class="subtitle">排程平台化與參與範圍</div>
+      <div class="meta"><a href="../index.html">← 回到履歷</a></div>
+    </header>
+
+    <section class="summary">
+      <p>
+        本頁整理 SRBG / S360 排程管理從 VM Cronjob 模式轉向 ETL Job Management Console、ADF 與 Pod 架構的背景、設計方向與參與範圍。內容重點放在排程可視化、相依性管理、失敗重啟、成本分析，以及舊系統版本升級與工具轉換。
+      </p>
+    </section>
+
+    <section>
+      <h2>背景</h2>
+      <p>
+        早期 S360 / SRBG 的排程多以 VM 為執行單位。當排程時間到達或任務被觸發後，VM 會啟動並執行 VM 內部的 Cronjob 程式；程式初始化後會到 MDB 查詢自身需要執行的排程設定，接著執行各專案的業務邏輯，最後將結果寫回各自的應用資料庫或記錄系統。
+      </p>
+      <p>
+        這種模式可以支援既有業務運作，但排程狀態、相依關係、失敗原因與重啟流程分散在 VM、資料表、Log 與不同專案中，較難從單一入口掌握整體資料流。
+      </p>
+    </section>
+
+    <section>
+      <h2>主要問題</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>排程不可視化</h3>
+          <p>使用者需要透過 VM、DB、Log 或專案文件確認排程狀態，較難快速掌握單一排程或整體資料流的執行情況。</p>
+        </div>
+        <div class="card">
+          <h3>相依性難以追蹤</h3>
+          <p>各專案排程彼此相依，若前置節點失敗，後續排程可能無法執行，但缺乏集中化工具協助定位失敗位置與影響範圍。</p>
+        </div>
+        <div class="card">
+          <h3>VM 負載與舊系統限制</h3>
+          <p>既有排程長期運行於 VM 與舊版 Node.js 環境，且每日皆有任務執行，版本升級與工具轉換需要避免影響既有排程。</p>
+        </div>
+        <div class="card">
+          <h3>管理與維運成本</h3>
+          <p>排程設定、重啟、成本與事件追蹤分散，增加 RD 與使用者之間確認問題、重跑任務與驗證結果的成本。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>To-Be 設計方向</h2>
+      <p>
+        To-Be 方向是將排程管理從分散在 VM 與各專案中的操作，整理成 ETL Job Management Console。透過平台化入口管理 batch 設定、排程狀態、相依性、重啟流程與成本資訊，讓 RD、PM 與業務團隊可以更快理解排程執行狀態與問題位置。
+      </p>
+      <p>
+        在執行架構上，逐步導入 ADF、Pod 與 Azure Function 等執行方式，分擔既有 VM 的壓力。對於可轉換的任務，將其遷移到較容易管理與觀測的執行模式；對於仍需留在 VM 的任務，則透過平台統一管理設定與狀態。
+      </p>
+    </section>
+
+    <section>
+      <h2>參與範圍</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Batch Management</h3>
+          <p>參與 Batch setting master/detail API、排程新增與編輯、DTO 檢核、排程設定維護與 Management Console 相關功能。</p>
+        </div>
+        <div class="card">
+          <h3>Dependency & Restart</h3>
+          <p>參與 parent-child dependency tree、loop check、step restart、失敗任務重啟與指定專案重啟等流程。</p>
+        </div>
+        <div class="card">
+          <h3>ADF / Pod / VM 轉換</h3>
+          <p>協助團隊將部分可轉換排程導入 ADF 或 Pod 架構，並保留 VM 任務的管理與追蹤能力。</p>
+        </div>
+        <div class="card">
+          <h3>版本升級與工具轉換</h3>
+          <p>面對舊系統與不中斷排程限制，協助進行版本升級、工具轉換、測試驗證與環境差異控管。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>平台脈絡</h2>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart LR
+  subgraph AsIs["As-Is：VM Cronjob 模式"]
+    Trigger["排程時間到 / 任務觸發"]
+    VM["VM 啟動"]
+    Cron["Cronjob 程式執行"]
+    MDB["查詢 MDB 排程設定"]
+    Logic["執行業務邏輯"]
+    AppDB["寫入各專案資料庫"]
+  end
+
+  subgraph Pain["主要限制"]
+    Visibility["排程狀態不易視覺化"]
+    Dependency["跨專案相依性難追蹤"]
+    Restart["失敗重啟與影響範圍需人工判斷"]
+    Legacy["舊版 Node.js / VM 環境升級限制"]
+  end
+
+  subgraph ToBe["To-Be：ETL Job Management"]
+    Console["Management Console"]
+    Batch["Batch Setting / Management"]
+    DepTree["Dependency Tree / Loop Check"]
+    Retry["Restart / Step Restart"]
+    Cost["ADF / VM Cost Analysis"]
+  end
+
+  subgraph Runtime["執行方式調整"]
+    ADF["ADF"]
+    Pod["K8s Pod"]
+    AF["Azure Function"]
+    VMKeep["Existing VM Jobs"]
+  end
+
+  Trigger --> VM --> Cron --> MDB --> Logic --> AppDB
+
+  Logic --> Visibility
+  MDB --> Dependency
+  Logic --> Restart
+  VM --> Legacy
+
+  Visibility --> Console
+  Dependency --> DepTree
+  Restart --> Retry
+  Legacy --> Runtime
+
+  Console --> Batch
+  Console --> DepTree
+  Console --> Retry
+  Console --> Cost
+
+  Batch --> ADF
+  Batch --> Pod
+  Batch --> AF
+  Batch --> VMKeep
+        </pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>產出與影響</h2>
+      <p>
+        這個方向讓排程管理從原本偏向 VM 與 DB 操作的模式，逐步轉為可由 Management Console 管理與觀測的方式。排程設定、相依關係、失敗重啟與成本資訊被集中到同一個平台中，降低人工查詢與跨團隊確認成本。
+      </p>
+      <p>
+        同時，透過 ADF、Pod 與 Azure Function 分擔部分 VM 任務，讓團隊在不中斷既有排程的前提下，逐步推進舊系統升級與執行架構轉換。
+      </p>
+    </section>
+  </main>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+  </script>
+</body>
+</html>
