@@ -19,6 +19,12 @@
     li + li { margin-top:5px; }
     a { color:var(--accent); text-decoration:none; font-weight:700; }
     a:hover { text-decoration:underline; }
+    .header-top { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; }
+    .language-switch { display:inline-flex; flex:0 0 auto; overflow:hidden; border:1px solid var(--line); border-radius:999px; background:#fff; font-size:13px; font-weight:700; line-height:1; }
+    .language-switch a, .language-switch span { display:inline-flex; align-items:center; padding:8px 12px; }
+    .language-switch a { color:var(--muted); }
+    .language-switch a:hover { background:var(--accent-soft); text-decoration:none; }
+    .language-switch .active { background:var(--accent); color:#fff; }
     .headline { margin-bottom:10px; color:var(--accent); font-size:18px; font-weight:700; }
     .meta { display:grid; gap:4px; color:var(--muted); }
     .skills { display:grid; gap:8px; margin-top:4px; }
@@ -29,32 +35,38 @@
     .company h3 { margin:0 0 4px; }
     .period { color:var(--muted); font-style:italic; }
     .project-link { margin:8px 0 14px; font-size:13px; font-weight:700; }
-    @media print { @page { size:A4; margin:13mm 12mm; } body { background:#fff; font-size:10.6px; line-height:1.42; } main { width:auto; margin:0; padding:0; border:0; border-radius:0; box-shadow:none; } header { padding-bottom:10px; } h1 { font-size:22px; margin-bottom:3px; } .headline { font-size:13px; margin-bottom:5px; } h2 { margin:13px 0 6px; font-size:12.5px; padding-bottom:3px; } h3 { margin:9px 0 3px; font-size:11.3px; } p { margin-bottom:5px; } ul { margin-top:4px; } li + li { margin-top:2px; } .company { margin-top:8px; padding:6px 8px; } .project-link { display:none; } .skill-row { grid-template-columns:120px 1fr; gap:8px; } }
-    @media (max-width:720px) { main { width:100%; margin:0; padding:28px 22px; border-radius:0; border-left:0; border-right:0; } .skill-row { grid-template-columns:1fr; gap:2px; } }
+    @media print { @page { size:A4; margin:13mm 12mm; } body { background:#fff; font-size:10.6px; line-height:1.42; } main { width:auto; margin:0; padding:0; border:0; border-radius:0; box-shadow:none; } header { padding-bottom:10px; } h1 { font-size:22px; margin-bottom:3px; } .headline { font-size:13px; margin-bottom:5px; } h2 { margin:13px 0 6px; font-size:12.5px; padding-bottom:3px; } h3 { margin:9px 0 3px; font-size:11.3px; } p { margin-bottom:5px; } ul { margin-top:4px; } li + li { margin-top:2px; } .company { margin-top:8px; padding:6px 8px; } .project-link, .language-switch { display:none; } .skill-row { grid-template-columns:120px 1fr; gap:8px; } }
+    @media (max-width:720px) { main { width:100%; margin:0; padding:28px 22px; border-radius:0; border-left:0; border-right:0; } .skill-row { grid-template-columns:1fr; gap:2px; } .header-top { flex-direction:column; gap:12px; } }
   </style>
 </head>
 <body>
   <main>
     <header>
-      <h1>Jay Yu</h1>
-      <div class="headline">Senior Engineer</div>
+      <div class="header-top">
+        <div>
+          <h1>Jay Yu</h1>
+          <div class="headline">Senior Engineer</div>
+        </div>
+        <nav class="language-switch" aria-label="Language switcher">
+          <a href="../index.html" lang="zh-Hant">中文</a>
+          <span class="active" aria-current="page">English</span>
+        </nav>
+      </div>
       <div class="meta">
         <div>Email: yuchenchiehjay@gmail.com | Phone: 0975130897</div>
         <div>Data Engineering | Web Systems | Kubernetes / GitOps | Cloud Automation | AI Workflow</div>
         <div>Education: M.S. in Information Management, National Chung Cheng University</div>
         <div>Certification: Microsoft Certified: Azure Data Engineer Associate (DP-203)</div>
-        <div><a href="../index.html">中文</a></div>
       </div>
     </header>
 
     <section>
       <h2>Skills</h2>
       <div class="skills">
-        <div class="skill-row"><strong>Languages</strong><span>Python, JavaScript / TypeScript, SQL, Go, Shell Script</span></div>
-        <div class="skill-row"><strong>Web</strong><span>Django, Express, RESTful API, OAuth 2.0, Graph API, React</span></div>
-        <div class="skill-row"><strong>Data</strong><span>Data Pipeline, ETL, Batch Job, Scheduling, Dependency, Restart / Retry, PostgreSQL</span></div>
-        <div class="skill-row"><strong>DevOps</strong><span>Docker, Kubernetes, Helm, Argo CD, GitHub Actions, Terraform, SonarQube</span></div>
-        <div class="skill-row"><strong>AI / Infra</strong><span>Model Service Integration, IAM / SSO, API Gateway, Monitoring, AIDC Platform</span></div>
+        <div class="skill-row"><strong>Backend Systems</strong><span>Python, TypeScript / JavaScript, Django, Express, RESTful API</span></div>
+        <div class="skill-row"><strong>Data Platforms</strong><span>SQL, PostgreSQL, ADF, Databricks, PySpark, ETL Job Management</span></div>
+        <div class="skill-row"><strong>Cloud Native</strong><span>Docker, Kubernetes, Helm, Argo CD, Terraform, GitHub Actions</span></div>
+        <div class="skill-row"><strong>AI Platform</strong><span>Model Service, IAM / SSO, API Gateway, Monitoring, AIDC Platform</span></div>
       </div>
     </section>
 
