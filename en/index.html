@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jay Yu | Resume</title>
+  <style>
+    :root { --text:#1f2933; --muted:#52606d; --line:#d9e2ec; --accent:#0f766e; --accent-soft:#e6f4f1; --paper:#fff; --page:#f5f7fa; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--page); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; font-size:14px; line-height:1.62; }
+    main { width:min(980px,calc(100% - 32px)); margin:32px auto; padding:40px 48px; background:var(--paper); border:1px solid var(--line); border-radius:8px; box-shadow:0 18px 48px rgba(15,23,42,.08); }
+    header { padding-bottom:22px; border-bottom:2px solid var(--accent); }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { margin-bottom:6px; font-size:30px; line-height:1.2; }
+    h2 { margin:26px 0 12px; color:var(--accent); font-size:17px; line-height:1.3; border-bottom:1px solid var(--line); padding-bottom:6px; }
+    h3 { margin:18px 0 6px; font-size:15px; line-height:1.35; }
+    p { margin-bottom:10px; }
+    ul { margin:8px 0 0; padding-left:20px; }
+    li + li { margin-top:5px; }
+    a { color:var(--accent); text-decoration:none; font-weight:700; }
+    a:hover { text-decoration:underline; }
+    .headline { margin-bottom:10px; color:var(--accent); font-size:18px; font-weight:700; }
+    .meta { display:grid; gap:4px; color:var(--muted); }
+    .skills { display:grid; gap:8px; margin-top:4px; }
+    .skill-row { display:grid; grid-template-columns:150px 1fr; gap:12px; }
+    .skill-row strong { color:var(--text); }
+    .profile { color:var(--muted); }
+    .company { margin-top:14px; padding:12px 14px; background:var(--accent-soft); border-left:4px solid var(--accent); border-radius:6px; }
+    .company h3 { margin:0 0 4px; }
+    .period { color:var(--muted); font-style:italic; }
+    .project-link { margin:8px 0 14px; font-size:13px; font-weight:700; }
+    @media print { @page { size:A4; margin:13mm 12mm; } body { background:#fff; font-size:10.6px; line-height:1.42; } main { width:auto; margin:0; padding:0; border:0; border-radius:0; box-shadow:none; } header { padding-bottom:10px; } h1 { font-size:22px; margin-bottom:3px; } .headline { font-size:13px; margin-bottom:5px; } h2 { margin:13px 0 6px; font-size:12.5px; padding-bottom:3px; } h3 { margin:9px 0 3px; font-size:11.3px; } p { margin-bottom:5px; } ul { margin-top:4px; } li + li { margin-top:2px; } .company { margin-top:8px; padding:6px 8px; } .project-link { display:none; } .skill-row { grid-template-columns:120px 1fr; gap:8px; } }
+    @media (max-width:720px) { main { width:100%; margin:0; padding:28px 22px; border-radius:0; border-left:0; border-right:0; } .skill-row { grid-template-columns:1fr; gap:2px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Jay Yu</h1>
+      <div class="headline">Senior Engineer</div>
+      <div class="meta">
+        <div>Email: yuchenchiehjay@gmail.com | Phone: 0975130897</div>
+        <div>Data Engineering | Web Systems | Kubernetes / GitOps | Cloud Automation | AI Workflow</div>
+        <div>Education: M.S. in Information Management, National Chung Cheng University</div>
+        <div>Certification: Microsoft Certified: Azure Data Engineer Associate (DP-203)</div>
+        <div><a href="../index.html">中文</a></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>Skills</h2>
+      <div class="skills">
+        <div class="skill-row"><strong>Languages</strong><span>Python, JavaScript / TypeScript, SQL, Go, Shell Script</span></div>
+        <div class="skill-row"><strong>Web</strong><span>Django, Express, RESTful API, OAuth 2.0, Graph API, React</span></div>
+        <div class="skill-row"><strong>Data</strong><span>Data Pipeline, ETL, Batch Job, Scheduling, Dependency, Restart / Retry, PostgreSQL</span></div>
+        <div class="skill-row"><strong>DevOps</strong><span>Docker, Kubernetes, Helm, Argo CD, GitHub Actions, Terraform, SonarQube</span></div>
+        <div class="skill-row"><strong>AI / Infra</strong><span>Model Service Integration, IAM / SSO, API Gateway, Monitoring, AIDC Platform</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Profile</h2>
+      <p class="profile">
+        I have 5 years of experience in software development, data platforms, and cloud-native systems. My strength is integrating fragmented enterprise data workflows, AI modules, backend APIs, and cloud resources into internal platforms that are deployable, observable, and maintainable. I have contributed to a business-group-level data platform at Wistron, supporting 22 internal projects, hundreds of users, and multiple RD / PM teams, covering workflow governance, scheduling, dependency tracking, restart mechanisms, and cost analysis. Recently, I have been involved in AI Data Center platform development, focusing on Kubernetes multi-environment deployment, Helm-based service delivery, GitOps workflow, IAM / SSO, IDC / Cluster / Container management modules, and platform monitoring integration.
+      </p>
+      <p class="project-link"><a href="./projects/career-path.html">View my capability path from Data End-to-End to AI Infrastructure →</a></p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="company">
+        <h3>Wistron Group | Senior Engineer | 2022/04 – Present</h3>
+        <div class="period">Wistron: 2024/05 – Present</div>
+        <div class="period">WITS onsite at Wistron: 2022/04 – 2024/05</div>
+      </div>
+
+      <h3>AIDC Computing Platform and Kubernetes Infrastructure | 2025/09 – Present</h3>
+      <p>Participated in the 0-to-1 development of an AI Data Center platform, organizing GPU / Container / Baremetal resources into an internal platform that can be requested, deployed, monitored, and demonstrated.</p>
+      <ul>
+        <li>Managed Kubernetes infrastructure and multi-environment deployment across Proxmox, AWS, and local MicroK8s for rapid validation and demos.</li>
+        <li>Built Helm / GitOps delivery workflows for 10+ core services, separating application repositories from deployment repositories with versioned images, Helm charts, and Argo CD.</li>
+        <li>Developed IDC, Cluster, and Container management modules, including CRUD, dependency checks, portal integration, and cluster connectivity verification.</li>
+        <li>Integrated IAM / SSO, API Gateway, storage, database, and monitoring capabilities for access control, service entry, and operational visibility.</li>
+        <li>Participated in E2E UAT, Cluster HA, VM recovery, data integrity, and GPU communication validation to verify platform usability under AI workloads.</li>
+      </ul>
+
+      <h3>SRBG Data Platform and Workflow Management System | 2023/11 – 2025/09</h3>
+      <ul>
+        <li>Helped build a business-group-level data platform to centralize distributed ETL jobs, scheduling, dependency tracking, restart mechanisms, and cost visibility.</li>
+        <li>Developed an ETL Job Management Console supporting job monitoring, restart / retry, dependency management, execution logs, data source tracking, and cost analysis.</li>
+        <li>Introduced CI/CD, SonarQube, unit testing, and Terraform-based resource configuration to improve platform stability.</li>
+        <li>Supported 22 internal projects, hundreds of users, and multiple RD / PM teams, and helped migrate convertible batch jobs to ADF / K8s Pod-based execution.</li>
+      </ul>
+
+      <h3>Wiwynn L1–L12 Server Component Data Platform | 2023/02 – 2023/11</h3>
+      <p>Contributed to a server component data platform for L1–L12 server data integration, query services, backend APIs, cross-system data integration, and data quality checks.</p>
+
+      <h3>Internal Digital Transformation and AI Projects | 2022/04 – 2023/02</h3>
+      <p>During the WITS onsite period, participated in internal digital transformation and AI application projects at Wistron, integrating recommendation systems, NLP, and analytics into HR, product recommendation, and knowledge application scenarios. Responsibilities included backend APIs, model service integration, Dockerized deployment, OAuth 2.0, and Azure Graph API integration.</p>
+
+      <div class="company"><h3>AccuHit | Data Analyst | 2021/07 – 2022/04</h3></div>
+      <p>Worked on user behavior analysis, audience segmentation, recommendation experiments, feature engineering, model validation, data productization, and CDP data architecture planning. Also helped evaluate and integrate AWS SageMaker / Personalize for marketing technology use cases.</p>
+    </section>
+  </main>
+</body>
+</html>
