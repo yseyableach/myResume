@@ -250,10 +250,10 @@
   <main>
     <header>
       <h1>游程傑 Jay Yu</h1>
-      <div class="headline">資深工程師</div>
+      <div class="headline">Enterprise Data & AI Platform Engineer</div>
       <div class="meta">
         <div>Email：yuchenchiehjay@gmail.com｜Phone：0975130897</div>
-        <div>資料工程｜後端系統｜Kubernetes / GitOps｜雲端自動化｜AI Workflow</div>
+        <div>AI Infrastructure｜Data Platform｜Backend API｜Kubernetes / GitOps｜AI Workflow</div>
         <div>學歷：國立中正大學 資訊管理碩士</div>
         <div>Certification：Microsoft Certified: Azure Data Engineer Associate（DP-203）</div>
       </div>
@@ -264,19 +264,23 @@
       <div class="skills">
         <div class="skill-row">
           <strong>Languages</strong>
-          <span>Python、JavaScript / TypeScript、SQL、Go</span>
+          <span>Python、JavaScript / TypeScript、SQL、Go、Shell Script</span>
         </div>
         <div class="skill-row">
-          <strong>Web / Backend</strong>
-          <span>Django、Express、React</span>
+          <strong>Backend / API</strong>
+          <span>Django、Express、RESTful API、OAuth 2.0、Graph API、React</span>
         </div>
         <div class="skill-row">
-          <strong>Data / Cloud</strong>
-          <span>Azure、Azure Data Factory、PostgreSQL、Terraform</span>
+          <strong>Data Platform</strong>
+          <span>Azure Data Factory、Databricks、PySpark、PostgreSQL、ETL、Data Pipeline、Data Governance</span>
         </div>
         <div class="skill-row">
           <strong>Cloud Native / DevOps</strong>
-          <span>Docker、Kubernetes、Helm、Argo CD、GitHub Actions Runner</span>
+          <span>Docker、Kubernetes、Helm、Argo CD、GitHub Actions Runner、Terraform、SonarQube</span>
+        </div>
+        <div class="skill-row">
+          <strong>AI / Platform</strong>
+          <span>AI Workflow、AI System Deployment、Model Service Integration、IAM / SSO、API Gateway、Monitoring</span>
         </div>
       </div>
     </section>
@@ -284,7 +288,7 @@
     <section>
       <h2>Profile</h2>
       <p class="profile">
-        具備 5 年軟體開發、資料平台與雲端原生架構實務經驗，擅長將企業內部分散的資料流程、排程任務與雲端資源，整合為具備監控、維運與治理能力的內部平台。曾參與緯創事業群級資料平台建置，支援 22 個內部專案、上百位使用者與多個 RD / PM 團隊，涵蓋資料流治理、排程管理、相依性追蹤與成本分析。近期參與 AI Data Center 平台從 0 到 1 建置，負責 Kubernetes、多環境部署、核心服務 Helm 化、IAM / SSO、IDC 管理模組與監控架構。
+        具備 5 年軟體開發、資料平台與雲端原生架構實務經驗，專長是將企業內部分散的資料流程、AI 模組、後端 API 與雲端資源，整合為可部署、可監控、可治理的內部平台。曾參與緯創事業群級資料平台建置，支援 22 個內部專案、上百位使用者與多個 RD / PM 團隊，涵蓋資料流治理、排程管理、相依性追蹤、失敗重啟與成本分析。近期參與 AI Data Center 平台從 0 到 1 建置，負責 Kubernetes 多環境部署、核心服務 Helm 化、GitOps 交付流程、IAM / SSO、IDC / Cluster / Container 管理模組與平台監控整合。職涯方向聚焦於 AI Infrastructure、Data Platform、MLOps 與企業內部平台工程。
       </p>
     </section>
 
@@ -292,7 +296,7 @@
       <h2>Experience</h2>
 
       <div class="company">
-        <h3>Wistron Group｜資深工程師｜2022/04 – Present</h3>
+        <h3>Wistron Group｜資深軟體工程師 / Data & AI Platform Engineer｜2022/04 – Present</h3>
         <div class="period">Wistron：2024/05 – Present</div>
         <div class="period">WITS onsite at Wistron：2022/04 – 2024/05</div>
       </div>
@@ -301,30 +305,32 @@
       <p>參與 AI Data Center 平台從 0 到 1 建置，將 GPU / Container / Baremetal 等算力資源，整理為可申請、可部署、可監控、可展示的企業內部平台。</p>
       <ul>
         <li>負責 Kubernetes 基礎設施與多環境部署，支援 Proxmox、AWS 與本機 MicroK8s，讓團隊可快速部署、驗證與展示平台功能。</li>
-        <li>建立 10+ 核心服務的 Helm / GitOps 部署流程，降低跨環境部署差異與人為設定錯誤。</li>
+        <li>建立 10+ 核心服務的 Helm / GitOps 部署流程，採用 application repo 與 deployment repo 分離，透過版本化 image、Helm chart 與 Argo CD 降低跨環境部署差異。</li>
         <li>開發 IDC、Cluster、Container 等資源管理模組，支援資源 CRUD、相依性檢查、Portal 整合與 cluster 連線驗證。</li>
         <li>協助整合 IAM / SSO、API Gateway、儲存、資料庫與監控能力，支援平台權限控管、服務入口與維運觀測。</li>
+        <li>參與端對端 UAT、Cluster HA、VM recovery、資料完整性與 GPU 通訊測試等驗證項目，協助確認平台在 AI 工作負載下的可用性。</li>
       </ul>
       <p class="project-link"><a href="./projects/aidc.html">查看 AIDC 平台 whole picture 與我的工程價值 →</a></p>
 
       <h3>SRBG 資料平台與排程管理系統｜2023/11 – 2025/09</h3>
       <ul>
         <li>面對跨產品線資料排程分散、人工維運成本高與失敗追蹤困難等問題，參與建置事業群級資料平台，將資料排程平台化為可監控、可重啟、可追蹤成本與相依性的治理機制。</li>
-        <li>開發 ETL Job Management Console，支援排程狀態監控、失敗重啟、相依性管理、執行紀錄與成本分析，並導入 CI/CD、SonarQube、單元測試與 Terraform 資源配置流程。</li>
+        <li>開發 ETL Job Management Console，支援排程狀態監控、失敗重啟、相依性管理、執行紀錄、資料來源追蹤與成本分析。</li>
+        <li>導入 CI/CD、SonarQube、單元測試與 Terraform 資源配置流程，提升資料平台開發、測試與部署穩定性。</li>
         <li>支援 22 個內部專案、上百位使用者與多個 RD / PM 團隊，推動 3 個主要專案將可轉換的多批排程任務遷移至 ADF / K8s Pod 架構，協助團隊透過資料流視覺化快速定位異常來源。</li>
       </ul>
       <p class="project-link"><a href="./projects/srbg.html">查看 SRBG 排程平台化與參與範圍 →</a></p>
 
       <h3>Wiwynn L1–L12 Server 零組件數據中台系統｜2023/02 – 2023/11</h3>
-      <p>參與 Wiwynn Server 零組件資料中台系統開發，支援 L1–L12 Server 零組件資料整合、查詢與內部資料服務需求，負責資料建模、後端查詢與跨系統資料整合。</p>
+      <p>參與 Wiwynn Server 零組件資料中台系統開發，支援 L1–L12 Server 零組件資料整合、查詢與內部資料服務需求，負責資料建模、後端查詢 API、跨系統資料整合與資料品質確認。</p>
 
       <h3>數位轉型內部 AI 專案｜2022/04 – 2023/02</h3>
-      <p>參與緯創內部數位轉型與 AI 應用開發，將推薦系統、NLP 與資料分析方法導入企業內部流程，支援 HR、產品推薦與知識應用場景。</p>
+      <p>參與緯創內部數位轉型與 AI 應用開發，將推薦系統、NLP 與資料分析方法導入企業內部流程，支援 HR、產品推薦與知識應用場景；負責後端 API、模型服務串接、Docker 化部署與 OAuth 2.0 / Azure Graph API 整合。</p>
 
       <div class="company">
         <h3>愛酷智能科技 AccuHit｜數據分析師｜2021/07 – 2022/04</h3>
       </div>
-      <p>參與使用者行為分析、受眾分群與推薦系統實驗，負責特徵工程、模型驗證與資料產品化；並協助團隊評估與串接 AWS AI 相關服務，探索雲端 AI 服務於行銷科技場景的應用。</p>
+      <p>參與使用者行為分析、受眾分群與推薦系統實驗，負責特徵工程、模型驗證與資料產品化；協助團隊評估與串接 AWS SageMaker / Personalize 等 AI 服務，探索雲端 AI 服務於行銷科技場景的應用。</p>
     </section>
   </main>
 </body>
