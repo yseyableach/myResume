@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Career Path | Jay Yu</title>
+  <style>
+    :root { --text:#1f2933; --muted:#52606d; --line:#d9e2ec; --accent:#0f766e; --accent-soft:#e6f4f1; --paper:#fff; --page:#f5f7fa; --bar:#0f766e; --bar-soft:#7bc6b6; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--page); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; font-size:14px; line-height:1.62; }
+    main { width:min(980px,calc(100% - 32px)); margin:32px auto; padding:40px 48px; background:var(--paper); border:1px solid var(--line); border-radius:8px; box-shadow:0 18px 48px rgba(15,23,42,.08); }
+    header { padding-bottom:22px; border-bottom:2px solid var(--accent); margin-bottom:24px; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { margin-bottom:8px; font-size:30px; line-height:1.2; }
+    h2 { margin:28px 0 12px; color:var(--accent); font-size:18px; line-height:1.3; border-bottom:1px solid var(--line); padding-bottom:6px; }
+    h3 { margin:0 0 6px; font-size:15px; line-height:1.35; color:var(--accent); }
+    p { margin-bottom:10px; }
+    a { color:var(--accent); text-decoration:none; font-weight:700; }
+    a:hover { text-decoration:underline; }
+    .subtitle { color:var(--accent); font-size:18px; font-weight:700; margin-bottom:10px; }
+    .meta { color:var(--muted); }
+    .summary { padding:14px 16px; background:var(--accent-soft); border-left:4px solid var(--accent); border-radius:6px; margin:18px 0 24px; }
+    .summary p { margin-bottom:0; }
+    .gantt-wrap { margin-top:14px; border:1px solid var(--line); border-radius:10px; overflow-x:auto; background:#fff; }
+    .gantt { min-width:820px; padding:18px 18px 22px; }
+    .gantt-header,.gantt-row { display:grid; grid-template-columns:170px repeat(5,1fr); gap:8px; align-items:center; }
+    .gantt-header { color:var(--muted); font-size:12px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+    .gantt-row { min-height:58px; border-bottom:1px solid var(--line); }
+    .gantt-row:last-child { border-bottom:0; }
+    .row-title { font-weight:700; color:var(--text); }
+    .row-subtitle { display:block; color:var(--muted); font-size:12px; font-weight:400; margin-top:2px; }
+    .bar { min-height:34px; padding:7px 10px; border-radius:999px; color:#fff; background:var(--bar); font-size:12px; font-weight:700; white-space:nowrap; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(15,118,110,.16); }
+    .bar.soft { background:var(--bar-soft); color:#12332f; }
+    .bar.muted { background:#d9e2ec; color:var(--text); }
+    .span-1-2 { grid-column:2 / 3; } .span-2-4 { grid-column:3 / 5; } .span-3-5 { grid-column:4 / 6; } .span-4-6 { grid-column:5 / 7; } .span-1-6 { grid-column:2 / 7; }
+    .cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:12px; }
+    .card { border:1px solid var(--line); border-radius:8px; padding:14px 16px; background:#fff; }
+    .card p { margin-bottom:0; color:var(--muted); font-size:13px; }
+    .flow { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:12px; }
+    .flow-step { padding:14px 16px; background:var(--accent-soft); border:1px solid var(--line); border-radius:8px; }
+    .flow-step strong { display:block; color:var(--accent); margin-bottom:6px; }
+    @media (max-width:720px) { main { width:100%; margin:0; padding:28px 22px; border-radius:0; border-left:0; border-right:0; } .cards,.flow { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>From Data Analysis to AI Infrastructure</h1>
+      <div class="subtitle">Career Capability Path and End-to-End Engineering Scope</div>
+      <div class="meta"><a href="../index.html">← Back to English Resume</a> | <a href="../../projects/career-path.html">中文</a></div>
+    </header>
+
+    <section class="summary">
+      <p>My career path has evolved from data understanding, system development, and data workflow platformization to AI Data Center and AI Infrastructure. The focus is not a single tool, but the ability to connect Data, Backend, Platform, and Infrastructure into enterprise systems that can be operated in practice.</p>
+    </section>
+
+    <section>
+      <h2>Career Gantt</h2>
+      <div class="gantt-wrap">
+        <div class="gantt">
+          <div class="gantt-header"><div></div><div>2021</div><div>2022</div><div>2023</div><div>2024</div><div>2025 → Now</div></div>
+          <div class="gantt-row"><div class="row-title">Data Analyst<span class="row-subtitle">AccuHit</span></div><div class="bar span-1-2">Behavior / CDP / Segmentation</div></div>
+          <div class="gantt-row"><div class="row-title">Software Engineer<span class="row-subtitle">WITS onsite at Wistron</span></div><div class="bar soft span-2-4">Backend API / AI Integration / Docker</div></div>
+          <div class="gantt-row"><div class="row-title">Data Platform<span class="row-subtitle">Wistron</span></div><div class="bar span-3-5">ETL / Batch / Dependency / Restart / Cost</div></div>
+          <div class="gantt-row"><div class="row-title">AIDC Platform<span class="row-subtitle">Wistron</span></div><div class="bar soft span-4-6">Kubernetes / Helm / GitOps / IAM / Monitoring</div></div>
+          <div class="gantt-row"><div class="row-title">Capability Thread<span class="row-subtitle">Data → AI Infra</span></div><div class="bar muted span-1-6">Data End-to-End → AI Preparation → AI Infrastructure</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Capability Stages</h2>
+      <div class="cards">
+        <div class="card"><h3>1. Data Understanding</h3><p>Understand business use cases through user behavior, segmentation, features, and CDP architecture.</p></div>
+        <div class="card"><h3>2. System Integration</h3><p>Integrate AI capabilities into enterprise systems through APIs, OAuth, Docker, and model services.</p></div>
+        <div class="card"><h3>3. Data Platform</h3><p>Platformize ETL, scheduling, dependencies, restart flows, and cost information for operation.</p></div>
+        <div class="card"><h3>4. AI Infrastructure</h3><p>Support AI workloads and computing platforms with Kubernetes, Helm, GitOps, IAM, and monitoring.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>End-to-End Scope</h2>
+      <div class="flow">
+        <div class="flow-step"><strong>Data End-to-End</strong>Data sources, ETL, batch jobs, scheduling, data quality, workflow tracing, and anomaly diagnosis.</div>
+        <div class="flow-step"><strong>AI Preparation</strong>Feature processing, data productization, model service integration, APIs, and enterprise workflow integration.</div>
+        <div class="flow-step"><strong>AI Infrastructure</strong>Kubernetes, Helm, GitOps, IAM / SSO, API Gateway, Monitoring, and AIDC platform capabilities.</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
