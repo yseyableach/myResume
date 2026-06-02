@@ -15,9 +15,7 @@
       --page: #f5f7fa;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -44,12 +42,7 @@
       margin-bottom: 24px;
     }
 
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
+    h1, h2, h3, p { margin-top: 0; }
 
     h1 {
       margin-bottom: 8px;
@@ -72,18 +65,14 @@
       line-height: 1.35;
     }
 
-    p {
-      margin-bottom: 12px;
-    }
+    p { margin-bottom: 12px; }
 
     ul {
       margin: 8px 0 0;
       padding-left: 20px;
     }
 
-    li + li {
-      margin-top: 5px;
-    }
+    li + li { margin-top: 5px; }
 
     a {
       color: var(--accent);
@@ -91,9 +80,7 @@
       font-weight: 700;
     }
 
-    a:hover {
-      text-decoration: underline;
-    }
+    a:hover { text-decoration: underline; }
 
     .subtitle {
       color: var(--accent);
@@ -102,9 +89,7 @@
       margin-bottom: 10px;
     }
 
-    .meta {
-      color: var(--muted);
-    }
+    .meta { color: var(--muted); }
 
     .summary {
       padding: 14px 16px;
@@ -114,9 +99,7 @@
       margin: 18px 0 24px;
     }
 
-    .summary p:last-child {
-      margin-bottom: 0;
-    }
+    .summary p:last-child { margin-bottom: 0; }
 
     .chips {
       display: flex;
@@ -235,24 +218,12 @@
         border-right: 0;
       }
 
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .story-grid,
-      .compact-list {
-        grid-template-columns: 1fr;
-      }
-
-      .highlights {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .grid, .story-grid, .compact-list { grid-template-columns: 1fr; }
+      .highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 460px) {
-      .highlights {
-        grid-template-columns: 1fr;
-      }
+      .highlights { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -324,22 +295,10 @@
     <section>
       <h2>留下的工程成果</h2>
       <div class="highlights">
-        <div class="metric">
-          <strong>10+</strong>
-          <span>核心服務 Helm / GitOps 整合</span>
-        </div>
-        <div class="metric">
-          <strong>3</strong>
-          <span>Proxmox、AWS、MicroK8s 多環境部署</span>
-        </div>
-        <div class="metric">
-          <strong>4</strong>
-          <span>IDC、Cluster、Container、Quota 管理脈絡</span>
-        </div>
-        <div class="metric">
-          <strong>1</strong>
-          <span>Lab 斷電與 Argo CD request noise 可靠性案例</span>
-        </div>
+        <div class="metric"><strong>10+</strong><span>核心服務 Helm / GitOps 整合</span></div>
+        <div class="metric"><strong>3</strong><span>Proxmox、AWS、MicroK8s 多環境部署</span></div>
+        <div class="metric"><strong>4</strong><span>IDC、Cluster、Container、Quota 管理脈絡</span></div>
+        <div class="metric"><strong>1</strong><span>Lab 斷電與 Argo CD request noise 可靠性案例</span></div>
       </div>
     </section>
 
@@ -406,6 +365,16 @@
 
     <section>
       <h2>交付流程</h2>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart LR
+  A["Code Change"] --> B["CI Validation"]
+  B --> C["Versioned Image"]
+  C --> D["Helm Deployment Config"]
+  D --> E["Argo CD Manual Sync"]
+  E --> F["Lab / AWS Environment"]
+        </pre>
+      </div>
       <div class="grid">
         <div class="card">
           <h3>程式碼到 Image</h3>
