@@ -1,0 +1,43 @@
+version: '3'
+
+vars:
+  BRANCH: '{{default "main" .BRANCH}}'
+  MSG: '{{default "Update resume" .MSG}}'
+  PORT: '{{default "8765" .PORT}}'
+
+tasks:
+  status:
+    desc: Show current git branch and pending changes.
+    cmds:
+      - git status --short --branch
+
+  check:
+    desc: Run lightweight checks before committing.
+    cmds:
+      - git diff --check
+
+  rebase:
+    desc: Rebase the current branch on origin/main.
+    cmds:
+      - git pull --rebase --autostash origin {{.BRANCH}}
+
+  serve:
+    desc: Serve the resume site locally.
+    cmds:
+      - python3 -m http.server {{.PORT}}
+
+  gitpush:
+    desc: Check, rebase, commit all current changes, and push to origin/main.
+    cmds:
+      - git status --short --branch
+      - git diff --check
+      - git pull --rebase --autostash origin {{.BRANCH}}
+      - git add -A
+      - |
+        if git diff --cached --quiet; then
+          echo "No staged changes to commit."
+        else
+          git commit -m "{{.MSG}}"
+        fi
+      - git push origin {{.BRANCH}}
+      - git status --short --branch
