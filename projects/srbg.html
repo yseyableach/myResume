@@ -3,116 +3,418 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Data Workflow Platform｜Jay Yu</title>
+  <title>SRBG 資料平台與排程管理系統｜Jay Yu</title>
   <style>
-    :root { --text:#1f2933; --muted:#52606d; --line:#d9e2ec; --accent:#0f766e; --accent-soft:#e6f4f1; --paper:#fff; --page:#f5f7fa; }
-    * { box-sizing:border-box; }
-    body { margin:0; background:var(--page); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei","Segoe UI",sans-serif; font-size:14px; line-height:1.68; }
-    main { width:min(980px,calc(100% - 32px)); margin:32px auto; padding:40px 48px; background:var(--paper); border:1px solid var(--line); border-radius:8px; box-shadow:0 18px 48px rgba(15,23,42,.08); }
-    header { padding-bottom:22px; border-bottom:2px solid var(--accent); margin-bottom:24px; }
-    h1,h2,h3,p { margin-top:0; }
-    h1 { margin-bottom:8px; font-size:30px; line-height:1.2; }
-    h2 { margin:28px 0 12px; color:var(--accent); font-size:18px; line-height:1.3; border-bottom:1px solid var(--line); padding-bottom:6px; }
-    h3 { margin:18px 0 8px; font-size:15px; line-height:1.35; }
-    p { margin-bottom:12px; }
-    a { color:var(--accent); text-decoration:none; font-weight:700; }
-    a:hover { text-decoration:underline; }
-    .subtitle { color:var(--accent); font-size:18px; font-weight:700; margin-bottom:10px; }
-    .meta { color:var(--muted); }
-    .summary { padding:14px 16px; background:var(--accent-soft); border-left:4px solid var(--accent); border-radius:6px; margin:18px 0 24px; }
-    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:12px; }
-    .card { border:1px solid var(--line); border-radius:8px; padding:14px 16px; background:#fff; }
-    .card h3 { color:var(--accent); margin-top:0; }
-    .mermaid-wrap { margin-top:14px; padding:16px; border:1px solid var(--line); border-radius:8px; background:#fff; overflow-x:auto; }
-    @media (max-width:720px) { main { width:100%; margin:0; padding:28px 22px; border-radius:0; border-left:0; border-right:0; } .grid { grid-template-columns:1fr; } }
+    :root {
+      --text: #1f2933;
+      --muted: #52606d;
+      --line: #d9e2ec;
+      --accent: #0f766e;
+      --accent-soft: #e6f4f1;
+      --paper: #ffffff;
+      --page: #f5f7fa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.68;
+    }
+
+    main {
+      width: min(980px, calc(100% - 32px));
+      margin: 32px auto;
+      padding: 40px 48px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+    }
+
+    header {
+      padding-bottom: 22px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 24px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-size: 30px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin: 28px 0 12px;
+      color: var(--accent);
+      font-size: 18px;
+      line-height: 1.3;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li + li {
+      margin-top: 5px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .subtitle {
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      color: var(--muted);
+    }
+
+    .summary {
+      padding: 14px 16px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      margin: 18px 0 24px;
+    }
+
+    .summary p:last-child {
+      margin-bottom: 0;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: #ffffff;
+    }
+
+    .card h3 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .change-line {
+      margin-bottom: 10px;
+    }
+
+    .change-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 42px;
+      margin-right: 7px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: #eef2f6;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .change-label.after {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px 14px;
+      background: #ffffff;
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--accent);
+      font-size: 22px;
+      line-height: 1.15;
+      margin-bottom: 5px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .compact-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 20px;
+      padding-left: 20px;
+    }
+
+    .mermaid-wrap {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        width: 100%;
+        margin: 0;
+        padding: 28px 22px;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+      }
+
+      .grid,
+      .compact-list {
+        grid-template-columns: 1fr;
+      }
+
+      .highlights {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 460px) {
+      .highlights {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <main>
     <header>
-      <h1>Data Workflow Platform</h1>
-      <div class="subtitle">資料排程平台化與參與範圍</div>
+      <h1>SRBG 資料平台與排程管理系統</h1>
+      <div class="subtitle">從分散 VM Cronjob 到可治理的 ETL Job Management Console</div>
       <div class="meta"><a href="../index.html">← 回到履歷</a></div>
     </header>
 
     <section class="summary">
-      <p>本頁整理企業資料排程平台從 VM Cronjob 模式轉向集中化管理介面、ADF 與 Pod 架構的背景、設計方向與參與範圍。內容重點放在排程可視化、相依性管理、失敗重啟、成本分析，以及舊系統版本升級與工具轉換。</p>
-    </section>
-
-    <section>
-      <h2>背景</h2>
-      <p>早期資料排程多以 VM 為執行單位。當排程時間到達或任務被觸發後，VM 會啟動並執行內部 Cronjob 程式；程式初始化後會到資料庫查詢自身需要執行的排程設定，接著執行各專案的處理邏輯，最後將結果寫回各自的應用資料庫或記錄系統。</p>
-      <p>此模式可以支援既有業務運作，但排程狀態、相依關係、失敗原因與重啟流程分散在 VM、資料表、Log 與不同專案中，較難從單一入口掌握整體資料流。</p>
-    </section>
-
-    <section>
-      <h2>主要問題</h2>
-      <div class="grid">
-        <div class="card"><h3>排程不可視化</h3><p>需要透過 VM、DB、Log 或文件確認排程狀態，較難快速掌握單一排程或整體資料流的執行情況。</p></div>
-        <div class="card"><h3>相依性難以追蹤</h3><p>各專案排程彼此相依，若前置節點失敗，後續排程可能無法執行，需集中化工具協助定位影響範圍。</p></div>
-        <div class="card"><h3>VM 負載與舊系統限制</h3><p>既有排程長期運行於 VM 與舊版 Node.js 環境，且每日皆有任務執行，升級與轉換需避免影響既有排程。</p></div>
-        <div class="card"><h3>管理與維運成本</h3><p>排程設定、重啟、成本與事件追蹤分散，增加 RD 與使用者之間確認問題、重跑任務與驗證結果的成本。</p></div>
+      <p>
+        這個專案的核心改變，是把原本只能靠 VM、DB、Log 與專案經驗判斷的資料排程，變成 RD / PM 可以從同一個平台觀測、追蹤、重啟與治理的流程。
+      </p>
+      <div class="chips">
+        <span class="chip">ETL Job Management</span>
+        <span class="chip">Dependency Visualization</span>
+        <span class="chip">Restart / Step Restart</span>
+        <span class="chip">ADF / K8s Pod</span>
+        <span class="chip">Cost Analysis</span>
       </div>
     </section>
 
     <section>
-      <h2>To-Be 設計方向</h2>
-      <p>To-Be 方向是將排程管理從分散在 VM 與各專案中的操作，整理成集中化的 Data Workflow Management Console。透過平台化入口管理 batch 設定、排程狀態、相依性、重啟流程與成本資訊，讓 RD、PM 與業務團隊可以更快理解排程執行狀態與問題位置。</p>
-      <p>在執行架構上，逐步導入 ADF、Pod 與 Azure Function 等執行方式，分擔既有 VM 的壓力。對於可轉換的任務，將其遷移到較容易管理與觀測的執行模式；對於仍需留在 VM 的任務，則透過平台統一管理設定與狀態。</p>
-    </section>
-
-    <section>
-      <h2>參與範圍</h2>
+      <h2>Jay Yu 改變了什麼</h2>
       <div class="grid">
-        <div class="card"><h3>Batch Management</h3><p>參與 Batch setting master/detail API、排程新增與編輯、DTO 檢核、排程設定維護與管理介面相關功能。</p></div>
-        <div class="card"><h3>Dependency & Restart</h3><p>參與 parent-child dependency tree、loop check、step restart、失敗任務重啟與指定專案重啟等流程。</p></div>
-        <div class="card"><h3>ADF / Pod / VM 轉換</h3><p>協助團隊將部分可轉換排程導入 ADF 或 Pod 架構，並保留 VM 任務的管理與追蹤能力。</p></div>
-        <div class="card"><h3>版本升級與工具轉換</h3><p>面對舊系統與不中斷排程限制，協助進行版本升級、工具轉換、測試驗證與環境差異控管。</p></div>
+        <div class="card">
+          <h3>從「查資料」變成「看平台」</h3>
+          <p class="change-line"><span class="change-label">原本</span>排程狀態散在 VM、DB、Log 與不同專案中，問題發生時要先花時間查任務跑到哪裡。</p>
+          <p class="change-line"><span class="change-label after">改變</span>RD / PM 可以從 Console 看到 batch 狀態、執行紀錄、資料來源與最近失敗點，討論焦點從「去哪查」變成「怎麼處理」。</p>
+        </div>
+        <div class="card">
+          <h3>從「人工重跑」變成「標準流程」</h3>
+          <p class="change-line"><span class="change-label">原本</span>任務失敗後，要靠 RD 判斷該重跑哪個步驟、哪些下游會受影響，處理方式容易因人而異。</p>
+          <p class="change-line"><span class="change-label after">改變</span>failed restart、step restart 與指定專案重啟被整理成一致操作流程，降低手動判斷與跨團隊確認成本。</p>
+        </div>
+        <div class="card">
+          <h3>從「人腦記相依」變成「平台追蹤」</h3>
+          <p class="change-line"><span class="change-label">原本</span>排程前後關係依賴文件、經驗或人工詢問；前置任務失敗時，下游影響範圍不容易快速確認。</p>
+          <p class="change-line"><span class="change-label after">改變</span>parent-child dependency tree、loop check 與 downstream impact 進入平台，異常來源與影響範圍可以被直接追蹤。</p>
+        </div>
+        <div class="card">
+          <h3>從「功能堆疊」變成「可交付平台」</h3>
+          <p class="change-line"><span class="change-label">原本</span>平台功能持續擴張，但品質檢查、部署流程與資源配置需要更穩定的工程基礎支撐。</p>
+          <p class="change-line"><span class="change-label after">改變</span>CI/CD、SonarQube、單元測試與 Terraform 進入交付流程，讓平台能持續演進而不是只交付一次性功能。</p>
+        </div>
       </div>
     </section>
 
     <section>
-      <h2>平台脈絡</h2>
+      <h2>可被驗證的改變</h2>
+      <div class="highlights">
+        <div class="metric">
+          <strong>22</strong>
+          <span>內部專案使用或被平台支援</span>
+        </div>
+        <div class="metric">
+          <strong>100+</strong>
+          <span>使用者與多個 RD / PM 團隊</span>
+        </div>
+        <div class="metric">
+          <strong>3</strong>
+          <span>主要專案批次任務導入 ADF / K8s Pod</span>
+        </div>
+        <div class="metric">
+          <strong>CI/CD</strong>
+          <span>SonarQube、單元測試與 Terraform 導入</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>改變前的狀態</h2>
+      <ul class="compact-list">
+        <li>排程散在 VM、DB、Log 與各專案中，沒有單一入口能快速看全貌。</li>
+        <li>前置排程失敗時，下游影響範圍需要靠經驗與人工查詢判斷。</li>
+        <li>失敗重啟、指定步驟重跑、專案層級重啟缺乏一致操作流程。</li>
+        <li>部分任務仍在舊 VM / Cronjob 架構中，每天都在跑，不能用中斷式改造。</li>
+        <li>成本、事件、資料來源與排程歷程分散，RD 與使用者確認問題的成本偏高。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>支撐這些改變的工程工作</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Batch Setting / Job Console</h3>
+          <p>參與 master / detail API、排程新增與編輯、DTO 檢核、狀態查詢、執行紀錄與資料來源追蹤。</p>
+        </div>
+        <div class="card">
+          <h3>Dependency & Restart</h3>
+          <p>參與 dependency tree、loop check、failed restart、step restart 與指定專案重啟流程。</p>
+        </div>
+        <div class="card">
+          <h3>ADF / Pod / VM 轉換</h3>
+          <p>協助可轉換的批次任務移往 ADF / K8s Pod，同時保留既有 VM 任務的管理與追蹤能力。</p>
+        </div>
+        <div class="card">
+          <h3>Quality / Delivery</h3>
+          <p>導入 CI/CD、SonarQube、單元測試與 Terraform，讓平台功能可被測試、部署與追蹤。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>平台脈絡圖</h2>
       <div class="mermaid-wrap">
         <pre class="mermaid">
 flowchart LR
-  subgraph AsIs["As-Is：VM Cronjob 模式"]
-    Trigger["排程時間到 / 任務觸發"] --> VM["VM 啟動"] --> Cron["Cronjob 執行"] --> DB["查詢排程設定"] --> Logic["執行處理邏輯"] --> AppDB["寫入應用資料庫"]
+  subgraph Before["原本：分散維運"]
+    VM["VM Cronjob"]
+    DB["排程設定 DB"]
+    Log["Log / 執行紀錄"]
+    Project["各專案處理邏輯"]
   end
-  subgraph Pain["主要限制"]
-    Visibility["狀態不易視覺化"]
-    Dependency["相依性難追蹤"]
-    Restart["重啟需人工判斷"]
-    Legacy["舊系統升級限制"]
+
+  subgraph Console["ETL Job Management Console"]
+    Batch["Batch Setting"]
+    Status["Job Status / History"]
+    Dependency["Dependency Tree / Loop Check"]
+    Restart["Failed Restart / Step Restart"]
+    Cost["Cost / Source Trace"]
   end
-  subgraph ToBe["To-Be：Data Workflow Management"]
-    Console["Management Console"] --> Batch["Batch Setting"]
-    Console --> DepTree["Dependency Tree"]
-    Console --> Retry["Restart / Step Restart"]
-    Console --> Cost["Cost Analysis"]
-  end
-  subgraph Runtime["執行方式調整"]
+
+  subgraph Runtime["執行方式"]
     ADF["ADF"]
     Pod["K8s Pod"]
-    AF["Azure Function"]
     VMKeep["Existing VM Jobs"]
   end
-  Logic --> Visibility --> Console
-  DB --> Dependency --> DepTree
-  Logic --> Restart --> Retry
-  VM --> Legacy --> Runtime
+
+  subgraph Impact["影響"]
+    Projects["22 個內部專案"]
+    Users["100+ 使用者"]
+    Teams["RD / PM 團隊"]
+    Locate["更快定位異常來源"]
+  end
+
+  VM --> Batch
+  DB --> Status
+  Log --> Status
+  Project --> Dependency
+  Status --> Restart
+  Dependency --> Restart
   Batch --> ADF
   Batch --> Pod
-  Batch --> AF
   Batch --> VMKeep
+  Cost --> Projects
+  Restart --> Users
+  Dependency --> Locate
+  Status --> Teams
         </pre>
       </div>
     </section>
 
     <section>
       <h2>產出與影響</h2>
-      <p>這個方向讓排程管理從原本偏向 VM 與 DB 操作的模式，逐步轉為可由管理平台觀測與操作的方式。排程設定、相依關係、失敗重啟與成本資訊被集中到同一個平台中，降低人工查詢與跨團隊確認成本。</p>
-      <p>同時，透過 ADF、Pod 與 Azure Function 分擔部分 VM 任務，讓團隊在不中斷既有排程的前提下，逐步推進舊系統升級與執行架構轉換。</p>
+      <ul class="compact-list">
+        <li>排程問題從「散在各處查」變成「從平台入口追蹤」。</li>
+        <li>失敗處理從「RD 人工判斷」變成「可重啟、可追蹤的一致流程」。</li>
+        <li>相依關係從「靠文件與經驗」變成「平台可視覺化」。</li>
+        <li>可轉換批次任務從 VM Cronjob 逐步遷移至 ADF / K8s Pod，降低長期維運壓力。</li>
+      </ul>
     </section>
   </main>
 
