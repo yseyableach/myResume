@@ -265,7 +265,7 @@
 
     <section class="summary">
       <p>
-        The core change was turning data workflows that previously required VM, DB, Log, and project-specific knowledge into a process that RD / PM teams could observe, trace, restart, and govern from a single platform.
+        The purpose of this project is to turn data workflows scattered across VM Cronjobs, DB tables, logs, and product lines into an ETL Job Management Console that can monitor jobs, restart failures, trace dependencies, and track cost.
       </p>
       <div class="chips">
         <span class="chip">ETL Job Management</span>
@@ -273,6 +273,28 @@
         <span class="chip">Restart / Step Restart</span>
         <span class="chip">ADF / K8s Pod</span>
         <span class="chip">Cost Analysis</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>What This Project Is For</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Scheduling Governance Entry Point</h3>
+          <p>Centralizes job status, execution history, and data source information that used to be scattered across VMs, DB tables, logs, and projects.</p>
+        </div>
+        <div class="card">
+          <h3>Failure Handling Flow</h3>
+          <p>Allows failed jobs to be handled through failed restart, step restart, and project restart flows instead of relying fully on manual judgment.</p>
+        </div>
+        <div class="card">
+          <h3>Dependency And Data Flow</h3>
+          <p>Platformizes parent-child dependency, loop check, and downstream impact so failure sources and impact scope can be located faster.</p>
+        </div>
+        <div class="card">
+          <h3>Runtime Architecture Transition</h3>
+          <p>Gradually moves convertible batch jobs toward ADF / K8s Pod without interrupting existing schedules, reducing long-term VM Cronjob pressure.</p>
+        </div>
       </div>
     </section>
 

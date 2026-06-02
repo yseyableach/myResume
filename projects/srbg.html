@@ -265,7 +265,7 @@
 
     <section class="summary">
       <p>
-        這個專案的核心改變，是把原本只能靠 VM、DB、Log 與專案經驗判斷的資料排程，變成 RD / PM 可以從同一個平台觀測、追蹤、重啟與治理的流程。
+        這個專案的目的，是把事業群內分散在 VM Cronjob、DB、Log 與各產品線中的資料排程，整理成可監控、可重啟、可追蹤相依與成本的 ETL Job Management Console。
       </p>
       <div class="chips">
         <span class="chip">ETL Job Management</span>
@@ -273,6 +273,28 @@
         <span class="chip">Restart / Step Restart</span>
         <span class="chip">ADF / K8s Pod</span>
         <span class="chip">Cost Analysis</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>這個專案在做什麼</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>排程治理入口</h3>
+          <p>把原本散在 VM、DB、Log 與各專案裡的排程狀態、執行紀錄與資料來源，集中到一個 Console。</p>
+        </div>
+        <div class="card">
+          <h3>失敗處理流程</h3>
+          <p>讓排程失敗後可以依照 failed restart、step restart、project restart 等流程處理，而不是完全依賴人工判斷。</p>
+        </div>
+        <div class="card">
+          <h3>相依與資料流</h3>
+          <p>把 parent-child dependency、loop check 與 downstream impact 平台化，讓異常來源與影響範圍更容易被定位。</p>
+        </div>
+        <div class="card">
+          <h3>執行架構轉換</h3>
+          <p>在不中斷既有排程的前提下，逐步把可轉換批次任務導向 ADF / K8s Pod，降低長期 VM Cronjob 維運壓力。</p>
+        </div>
       </div>
     </section>
 

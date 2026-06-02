@@ -266,7 +266,7 @@
 
     <section class="summary">
       <p>
-        在 AIDC / Chthonia 中，將 GPU 資源、平台服務、部署流程、IAM 與監控，整理成可操作、可部署、可驗證、可維運的工程系統。
+        這個專案的目的，是建立企業內部 AI Data Center 控制面，讓 GPU、Container、Bare-metal 等算力資源可以被申請、分配、部署、監控與治理，而不是停留在機房設備與人工維運流程。
       </p>
       <div class="chips">
         <span class="chip">Kubernetes / MicroK8s</span>
@@ -274,6 +274,28 @@
         <span class="chip">IDC / Cluster / Container</span>
         <span class="chip">IAM / API Gateway</span>
         <span class="chip">Monitoring / Reliability</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>這個專案在做什麼</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>算力資源入口</h3>
+          <p>把 GPU、IDC、Cluster、Container、Quota、User 與 Project 整理成 Portal 可以管理與申請的資源。</p>
+        </div>
+        <div class="card">
+          <h3>平台服務控制面</h3>
+          <p>支援 Admin Console / Service Portal，讓管理者與使用者能操作資源、查看狀態、進入服務。</p>
+        </div>
+        <div class="card">
+          <h3>交付與環境治理</h3>
+          <p>讓平台服務可以透過 Helm、image 版本與 Argo CD 在 Lab / AWS / MicroK8s 等環境被部署與驗證。</p>
+        </div>
+        <div class="card">
+          <h3>可靠性與觀測</h3>
+          <p>整合監控、UAT、HA、VM recovery、GPU test 與異常處理流程，讓平台能被維運而不只是 Demo。</p>
+        </div>
       </div>
     </section>
 
