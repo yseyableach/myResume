@@ -114,10 +114,40 @@
       margin: 18px 0 24px;
     }
 
+    .summary p:last-child {
+      margin-bottom: 0;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
+      margin-top: 12px;
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
       margin-top: 12px;
     }
 
@@ -131,6 +161,59 @@
     .card h3 {
       color: var(--accent);
       margin-top: 0;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px 14px;
+      background: #ffffff;
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--accent);
+      font-size: 22px;
+      line-height: 1.15;
+      margin-bottom: 5px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .story {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: #ffffff;
+    }
+
+    .story h3 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    .story p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .compact-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 20px;
+      padding-left: 20px;
     }
 
     .mermaid-wrap {
@@ -155,6 +238,21 @@
       .grid {
         grid-template-columns: 1fr;
       }
+
+      .story-grid,
+      .compact-list {
+        grid-template-columns: 1fr;
+      }
+
+      .highlights {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 460px) {
+      .highlights {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -162,116 +260,216 @@
   <main>
     <header>
       <h1>AIDC / Chthonia Platform</h1>
-      <div class="subtitle">平台概述與參與範圍</div>
+      <div class="subtitle">從平台原型到可交付、可治理、可觀測的 AI Data Center 控制面</div>
       <div class="meta"><a href="../index.html">← 回到履歷</a></div>
     </header>
 
     <section class="summary">
       <p>
-        本頁整理 AIDC / Chthonia 平台的產品定位、主要模組、交付流程與驗證範圍，並說明我在其中參與的工程工作。內容重點放在平台整體脈絡，以及我負責落地的 Kubernetes、GitOps、IAM、IDC 管理與可靠性相關工作。
+        在 AIDC / Chthonia 中，將 GPU 資源、平台服務、部署流程、IAM 與監控，整理成可操作、可部署、可驗證、可維運的工程系統。
       </p>
+      <div class="chips">
+        <span class="chip">Kubernetes / MicroK8s</span>
+        <span class="chip">Helm / Argo CD</span>
+        <span class="chip">IDC / Cluster / Container</span>
+        <span class="chip">IAM / API Gateway</span>
+        <span class="chip">Monitoring / Reliability</span>
+      </div>
     </section>
 
     <section>
-      <h2>平台定位</h2>
-      <p>
-        AIDC / Chthonia 是一套面向 AI Data Center 的內部平台，目標是將 GPU、IDC、Cluster、Container、Quota、User 與 Project 等資源整理成可管理、可部署、可觀測的服務。
-      </p>
-      <p>
-        平台包含兩個主要介面：Admin Console 與 Service Portal。Admin Console 供平台管理員管理組織、部門、專案、成員、IDC、Cluster、Quota、Billing 與系統設定；Service Portal 供 AI Researcher / MLOps 使用者查看所屬 Project、Quota、Container、資源狀態與服務入口。
-      </p>
-    </section>
-
-    <section>
-      <h2>參與範圍</h2>
+      <h2>Jay Yu 改變了什麼</h2>
       <div class="grid">
         <div class="card">
-          <h3>資源管理模組</h3>
-          <p>參與 IDC、Cluster、Container 等資源管理功能，包含 CRUD、相依性檢查、Portal 整合與 cluster 連線驗證。</p>
+          <h3>資源從「機房設備」變成「平台物件」</h3>
+          <p>把 IDC、Cluster、Container、Quota 等概念整理成 Portal 可管理的資源模型，支援 CRUD、相依性檢查與 cluster 連線驗證。</p>
         </div>
         <div class="card">
-          <h3>Kubernetes 與多環境部署</h3>
-          <p>建置與維護 Kubernetes 相關部署環境，支援 Proxmox、AWS 與本機 MicroK8s，協助團隊進行功能驗證與展示。</p>
+          <h3>服務從「手動部署」變成「可控交付」</h3>
+          <p>建立 application repo / deployment repo 分離流程，用 Helm、版本化 image 與 Argo CD 保留跨環境部署控制點。</p>
         </div>
         <div class="card">
-          <h3>GitOps 交付流程</h3>
-          <p>參與 portal / portal-helm 分離的部署流程。CI 產出版本化 image，CD 透過 Argo CD 進行手動選版與同步。</p>
+          <h3>認證從「外部跳轉」變成「一致體驗」</h3>
+          <p>協助 Keycloak SSO、權限、session、email invitation 與客製化登入樣式，並把 theme / realm config 打包成可部署 image。</p>
         </div>
         <div class="card">
-          <h3>核心服務整合</h3>
-          <p>協助整合 IAM / SSO、API Gateway、儲存、資料庫與監控相關能力，支援平台權限控管、服務入口與維運觀測。</p>
+          <h3>異常從「log 噪音」變成「可觀測訊號」</h3>
+          <p>針對 Lab 斷電後 Argo CD request noise，整理 shutdown procedure、撰寫每日 log 檢查 script，並推動 monitoring 團隊產品化。</p>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>平台脈絡</h2>
-      <div class="mermaid-wrap">
-        <pre class="mermaid">
-flowchart LR
-  subgraph Needs["需求與限制"]
-    AdminNeed["管理員需要治理<br/>Org / Dept / Project / Member<br/>IDC / Cluster / Quota / Billing"]
-    UserNeed["使用者需要查看<br/>Project / Quota / Container<br/>資源狀態與服務入口"]
-    DeployNeed["GPU 環境資源有限且共享<br/>部署需保留人工控制點"]
-    ReliabilityNeed["平台需驗證<br/>HA / 資料完整性 / GPU 通訊效能"]
-  end
+      <h2>留下的工程成果</h2>
+      <div class="highlights">
+        <div class="metric">
+          <strong>10+</strong>
+          <span>核心服務 Helm / GitOps 整合</span>
+        </div>
+        <div class="metric">
+          <strong>3</strong>
+          <span>Proxmox、AWS、MicroK8s 多環境部署</span>
+        </div>
+        <div class="metric">
+          <strong>4</strong>
+          <span>IDC、Cluster、Container、Quota 管理脈絡</span>
+        </div>
+        <div class="metric">
+          <strong>1</strong>
+          <span>Lab 斷電與 Argo CD request noise 可靠性案例</span>
+        </div>
+      </div>
+    </section>
 
-  subgraph Product["產品介面"]
-    AdminConsole["Admin Console"]
-    ServicePortal["Service Portal"]
-  end
+    <section>
+      <h2>我負責的範圍</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>資源管理</h3>
+          <p>參與 IDC、Cluster、Container 等資源管理功能，包含 CRUD、相依性檢查、Portal 整合與 cluster 連線驗證。</p>
+        </div>
+        <div class="card">
+          <h3>Kubernetes 部署</h3>
+          <p>建置 Proxmox、AWS 與本機 MicroK8s 環境，支援功能驗證、Demo 與平台服務部署。</p>
+        </div>
+        <div class="card">
+          <h3>GitOps 交付流程</h3>
+          <p>採用 application repo / deployment repo 分離；CI 產出 image，Argo CD 控制選版與同步。</p>
+        </div>
+        <div class="card">
+          <h3>核心服務整合</h3>
+          <p>協助整合 IAM / SSO、API Gateway、MinIO、CNPG PoC、OpenSearch PoC 與 Monitoring Stack。</p>
+        </div>
+      </div>
+    </section>
 
-  subgraph Engineering["工程範圍"]
-    Runtime["Kubernetes / MicroK8s / AWS"]
-    Core["IDC / Cluster / Container API<br/>Resource Dependency Check"]
-    Identity["Keycloak / IAM / SSO"]
-    GitOps["Helm / Argo CD / Versioned Image"]
-    Infra["MinIO / Kong / CNPG PoC / Monitoring"]
-  end
+    <section>
+      <h2>平台在解什麼問題</h2>
+      <ul class="compact-list">
+        <li>把 GPU、IDC、Cluster、Container、Quota、User 與 Project 變成可管理資源。</li>
+        <li>區分 CPU service cluster 與 GPU workload cluster，避免平台服務與 AI 算力資源互相干擾。</li>
+        <li>讓 Admin Console 能治理組織、專案、成員、IDC、Cluster、Quota 與系統設定。</li>
+        <li>讓 Service Portal 能提供 Project、Quota、Container、資源狀態與服務入口。</li>
+        <li>讓共享 GPU 測試環境保留人工部署控制點，降低錯版與誤部署風險。</li>
+      </ul>
+    </section>
 
-  subgraph Validation["驗證項目"]
-    UAT["End-to-End UAT"]
-    HA["Cluster HA / VM Recovery"]
-    Data["Data Integrity / State Continuity"]
-    NCCL["NCCL / RDMA GPU Test"]
-  end
+    <section>
+      <h2>Service Cluster 與 GPU Cluster 分工</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>CPU Service Cluster</h3>
+          <p>Portal、IAM / SSO、API Gateway、資料庫、監控等平台服務本身不直接使用 GPU，因此放在 CPU cluster，讓平台控制面與算力工作負載分離。</p>
+        </div>
+        <div class="card">
+          <h3>GPU Workload Cluster</h3>
+          <p>GPU 資源由另一個 cluster 管理。若環境有 8 張 GPU card，在 kubectl get nodes 可視為 8 個 GPU nodes；當客戶 request 2 張 GPU，平台會將對應 2 個 nodes 組成該客戶可使用的 workload cluster。</p>
+        </div>
+      </div>
+    </section>
 
-  AdminNeed --> AdminConsole
-  UserNeed --> ServicePortal
-  DeployNeed --> GitOps
-  ReliabilityNeed --> Validation
-
-  AdminConsole --> Core
-  ServicePortal --> Core
-
-  Core --> Runtime
-  Identity --> Runtime
-  GitOps --> Runtime
-  Infra --> Runtime
-
-  Runtime --> UAT
-  Runtime --> HA
-  Runtime --> Data
-  Runtime --> NCCL
-        </pre>
+    <section>
+      <h2>IAM / SSO 整合</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>認證與權限流程</h3>
+          <p>協助整合 Keycloak 作為 SSO 認證服務，處理登入、權限控管、session 與 Portal 使用者 / 專案權限管理；也協助評估 Keycloak 公版信件限制，支援前端與 Go server 端的 email invitation 客製化流程。</p>
+        </div>
+        <div class="card">
+          <h3>白牌化與部署</h3>
+          <p>協助前端調整 Keycloak login / redirect UI 樣式，降低使用者察覺第三方認證頁面的斷裂感；將修改後的 theme / realm config 打包成 Docker image，讓 IAM 服務可隨環境一致部署。</p>
+        </div>
       </div>
     </section>
 
     <section>
       <h2>交付流程</h2>
-      <p>
-        平台採用 application repo 與 deployment repo 分離的方式：portal repo 負責應用程式程式碼與 image 產出；portal-helm repo 負責 Helm chart 與部署設定。當 feat/* 合併至 dev 後，CI pipeline 會建立版本化 image 並推送至 GHCR。
-      </p>
-      <p>
-        由於 GPU 測試環境資源有限且屬共享環境，實際部署透過 Argo CD 手動選版與同步。此方式可保留部署控制點，並讓團隊在需要時切換不同測試版本。
-      </p>
+      <div class="grid">
+        <div class="card">
+          <h3>程式碼到 Image</h3>
+          <p>portal repo 負責應用程式碼與 image 產出；feat/* 合併至 dev 後，由 CI 建立版本化 image 並推送至 GHCR，作為後續 Lab / AWS 環境部署來源。</p>
+        </div>
+        <div class="card">
+          <h3>Image 到環境</h3>
+          <p>portal-helm repo 管理 Helm chart 與部署設定；dev 對應 Lab 環境、qas 對應 AWS 環境。由於 Lab 測試環境仍有其他人共用，Argo CD 採手動選版與同步，避免自動部署影響共享資源。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>監控案例：Lab 斷電後的 Argo CD 噪音</h2>
+      <div class="story-grid">
+        <div class="story">
+          <h3>問題</h3>
+          <p>Lab 環境非預期斷電後，MicroK8s cluster 可能進入異常狀態，Argo CD 持續送出無效 API request，讓 log 與告警變得很吵。</p>
+        </div>
+        <div class="story">
+          <h3>處理</h3>
+          <p>分析 cluster 狀態與 log 行為後，整理 shutdown procedure：可預期維護時先停 worker nodes，再停 control node。</p>
+        </div>
+        <div class="story">
+          <h3>結果</h3>
+          <p>撰寫每日 log 檢查 script 追蹤異常 request，並把檢查邏輯交給 monitoring 團隊，後續轉成產品內建模組。</p>
+        </div>
+      </div>
     </section>
 
     <section>
       <h2>可靠性與驗證</h2>
-      <p>
-        平台驗收不只包含功能測試，也涵蓋端對端 UAT、Cluster HA、VM 故障恢復、資料完整性、GPU 算力狀態接續，以及 NCCL / RDMA GPU 通訊效能測試。這些測試用於確認平台在功能、部署、恢復與 AI 工作負載支援上的基本可用性。
-      </p>
+      <ul class="compact-list">
+        <li>End-to-End UAT：確認 Admin Console 與 Service Portal 主要流程可完整串起。</li>
+        <li>Cluster HA / VM Recovery：驗證節點與 VM 異常後的服務恢復能力。</li>
+        <li>Data Integrity：確認平台狀態與資料在異常情境下仍可延續。</li>
+        <li>NCCL / RDMA GPU Test：確認 AI 工作負載下的 GPU 通訊能力。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>AIDC 工程脈絡圖</h2>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart LR
+  subgraph Users["使用情境"]
+    Admin["Admin<br/>治理 IDC / Cluster / Quota"]
+    Researcher["AI Researcher / MLOps<br/>申請與使用 Container"]
+  end
+
+  subgraph Platform["平台治理層"]
+    Resource["IDC / Cluster / Container API<br/>CRUD / Dependency Check"]
+    Identity["Keycloak IAM / SSO<br/>Permission / Token / Email"]
+    Portal["Admin Console / Service Portal<br/>資源狀態與服務入口"]
+  end
+
+  subgraph Delivery["交付與運行層"]
+    GitOps["Helm / Argo CD<br/>版本化部署與人工控制點"]
+    ServiceCluster["CPU Service Cluster<br/>Portal / IAM / API Gateway"]
+    GPUCluster["GPU Workload Cluster<br/>GPU Nodes / Customer Allocation"]
+    Allocation["Quota / Request<br/>2 GPU nodes -> workload cluster"]
+    Core["Keycloak Theme / Realm Config<br/>MinIO / Kong / CNPG / OpenSearch"]
+  end
+
+  subgraph Ops["可靠性與觀測"]
+    Monitor["Prometheus / Grafana<br/>Node / Pod / Service 監控"]
+    Runbook["Shutdown Procedure / Log Check<br/>降低 Argo CD request noise"]
+    Verify["UAT / HA / VM Recovery / GPU Test"]
+  end
+
+  Admin --> Portal
+  Researcher --> Portal
+  Portal --> Resource
+  Portal --> Identity
+  Resource --> GitOps
+  Resource --> Allocation
+  Identity --> GitOps
+  GitOps --> ServiceCluster
+  Core --> ServiceCluster
+  Allocation --> GPUCluster
+  ServiceCluster --> Monitor
+  GPUCluster --> Monitor
+  GPUCluster --> Verify
+  Monitor --> Runbook
+        </pre>
+      </div>
     </section>
   </main>
 
