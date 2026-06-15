@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>No Trigger Buy Billing ETL｜Jay Yu</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KCBL3WG2V3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KCBL3WG2V3');
+  </script>
+  <style>
+    :root {
+      --text: #1f2933;
+      --muted: #52606d;
+      --line: #d9e2ec;
+      --accent: #0f766e;
+      --accent-soft: #e6f4f1;
+      --paper: #ffffff;
+      --page: #f5f7fa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.68;
+    }
+    main {
+      width: min(1100px, calc(100% - 32px));
+      margin: 32px auto;
+      padding: 40px 48px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+    }
+    header {
+      padding-bottom: 22px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 24px;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: 30px; line-height: 1.2; }
+    h2 {
+      margin: 28px 0 12px;
+      color: var(--accent);
+      font-size: 18px;
+      line-height: 1.3;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+    }
+    h3 { margin: 16px 0 6px; font-size: 15px; }
+    p { margin-bottom: 12px; }
+    ul { margin: 8px 0 0; padding-left: 20px; }
+    li + li { margin-top: 5px; }
+    a { color: var(--accent); text-decoration: none; font-weight: 700; }
+    a:hover { text-decoration: underline; }
+    .subtitle { color: var(--accent); font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .meta { color: var(--muted); }
+    .summary {
+      padding: 14px 16px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      margin: 18px 0 24px;
+    }
+    .summary p:last-child { margin-bottom: 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: #ffffff;
+    }
+    .card h3 { color: var(--accent); margin-top: 0; }
+    .card p:last-child { margin-bottom: 0; }
+    .mermaid-wrap {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      overflow-x: auto;
+    }
+    @media (max-width: 720px) {
+      main { width: 100%; margin: 0; padding: 28px 18px; border-radius: 0; border-left: 0; border-right: 0; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>No Trigger Buy Billing ETL</h1>
+      <div class="subtitle">將跨區域、跨價格版本的未開票資料轉換成可核對的 Aging Exposure</div>
+      <div class="meta"><a href="./srbg.html">← 回到 SRBG 專案</a>｜<a href="../index.html">回到履歷</a></div>
+    </header>
+
+    <section class="summary">
+      <p><strong>業務問題：</strong>已出貨但尚未正常 Billing 的訂單，需要在月結時準確計算未開票金額、帳齡與可追溯明細，提供帳務核對與後續追蹤。</p>
+      <p><strong>工程重點：</strong>依 Plant 判斷區域，再依月結月份選擇正確 Price Source，處理 2024/11 與 2024/12 的價格規則切換，最後產出 Detail、Summary 與 Dashboard Data。</p>
+    </section>
+
+    <section>
+      <h2>核心複雜度</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>資料範圍與可追溯性</h3>
+          <p>只納入 Open shipment / order data，保留 Order、DN、Line、PN、Quantity、PGI Date 與 Plant，讓每筆金額都能回到原始交易證據。</p>
+        </div>
+        <div class="card">
+          <h3>Plant / Region 規則</h3>
+          <p>F034、F036 對應 NA / WTX；F070 對應 MX / WSMX；其他 Plant 標記為 Unknown，避免錯誤套價後被靜默計入。</p>
+        </div>
+        <div class="card">
+          <h3>價格版本切換</h3>
+          <p>2024/11 以前使用 Legacy No Trigger Buy Price；2024/12 以後依 NA 與 MX 分流到不同的現行 Price File。</p>
+        </div>
+        <div class="card">
+          <h3>財務衍生與交付</h3>
+          <p>計算 Report Date、Aging、Aging Bucket 與 Price × Quantity，產出明細、彙總、Dashboard、Excel、Blob、SharePoint 與正式寄信流程。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>End-to-End Flow</h2>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart TD
+    A[業務問題<br/>已出貨但尚未正常 Billing 的 No Trigger Buy<br/>要算出金額、帳齡、明細證據] --> B[月結觸發<br/>每月 1 號處理前一個月資料]
+
+    B --> C[定義資料範圍<br/>只納入 Open shipment / order data]
+    C --> C1[排除不屬於本次月結範圍的資料]
+    C --> C2[保留可追溯欄位<br/>Order / DN / Line / PN / Qty / PGI Date / Plant]
+
+    C1 --> D[判斷業務歸屬<br/>依 Plant 對應 Region / Site]
+    C2 --> D
+
+    D --> D1[F034 / F036<br/>NA / WTX]
+    D --> D2[F070<br/>MX / WSMX]
+    D --> D3[其他 Plant<br/>標記 Unknown<br/>避免誤算]
+
+    D1 --> E[選擇 Price Source]
+    D2 --> E
+    D3 --> E
+
+    E --> E1[歷史規則<br/>202411 以前<br/>使用 Legacy No Trigger Buy Price]
+    E --> E2[NA 現行規則<br/>202412 以後<br/>使用 WTX NA Price File]
+    E --> E3[MX 現行規則<br/>202412 以後<br/>使用 WSMX LA Price File]
+    E --> E4[找不到價格<br/>保留明細供後續檢查<br/>避免靜默漏帳]
+
+    E1 --> F[計算 Billing Exposure]
+    E2 --> F
+    E3 --> F
+    E4 --> F
+
+    F --> F1[Report Date<br/>使用月結月份月底]
+    F --> F2[Aging<br/>Report Date - PGI Date]
+    F --> F3[Aging Bucket<br/>&lt;=30D / 31-60D / 61-90D<br/>91-180D / 181-365D / Over 1Y]
+    F --> F4[Amount<br/>Price x Quantity]
+    F --> F5[補 Billing Metadata<br/>Site / Billing Type / FolderYM]
+
+    F1 --> G[產出可核對證據]
+    F2 --> G
+    F3 --> G
+    F4 --> G
+    F5 --> G
+
+    G --> G1[Detail Evidence<br/>每筆 Order / PN / Qty / Price / Aging / Plant]
+    G --> G2[Summary Evidence<br/>依 Aging Bucket 彙總金額]
+    G --> G3[Dashboard Data<br/>依 Site / Plant / Month 統計 Unbilled Amount]
+
+    G1 --> H[Load / Refresh]
+    G2 --> H
+    G3 --> H
+
+    H --> H1[刷新 No Trigger Buy 明細表<br/>customer_report.no_trigger_buy_report]
+    H --> H2[寫入 Billing Chart<br/>customer_report.billing_chart]
+
+    H1 --> I[產生 Business Report]
+    H2 --> I
+
+    I --> I1[Excel Detail Sheet<br/>給帳務追明細]
+    I --> I2[Excel Summary Sheet<br/>給帳務看 Aging Exposure]
+    I --> I3[套用報表格式<br/>欄位、金額、日期、樣式]
+
+    I1 --> J[環境差異]
+    I2 --> J
+    I3 --> J
+
+    J --> J1[QAS<br/>驗證資料、規則、報表結果]
+    J --> J2[PRD<br/>正式產出 Excel<br/>上傳 Blob / SharePoint<br/>寄送 Business Email]
+        </pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>面試時可聚焦的描述</h2>
+      <p>這支 ETL 的複雜點不是單純搬移資料，而是把區域、時間版本與帳務價格規則轉換成可維護的程式邏輯。系統需要根據 Plant 判斷 Site，再根據月結月份決定 Legacy 或現行 Price Source，最後將交易明細轉換成帳務可直接核對的 Unbilled Aging Exposure。</p>
+    </section>
+  </main>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', flowchart: { useMaxWidth: false } });
+  </script>
+</body>
+</html>
