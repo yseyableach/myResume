@@ -19,16 +19,16 @@
 
   <section class="summary">
     <p><strong>業務問題：</strong>已出貨但尚未正常 Billing 的訂單，需要在月結時準確計算未開票金額、帳齡與可追溯明細。</p>
-    <p><strong>工程重點：</strong>每月第一個工作日處理前一個月資料，先依 Plant Group 判斷 US、CA 或 MX，再依資料月份選擇對應的價格版本。</p>
+    <p><strong>工程重點：</strong>每月第一個工作日處理前一個月資料，從交易資料與 SharePoint 價格檔取得輸入，依國家與月份選擇價格版本，最後寫入 DB 並將報表交付至 Blob、SharePoint 與 Email。</p>
   </section>
 
   <section>
     <h2>核心複雜度</h2>
     <div class="grid">
-      <div class="card"><h3>資料準備與可追溯性</h3><p>從 Open shipment / order data 中選出 Billing 計算與後續追蹤所需欄位，包括 Order、Delivery、Line、Part Number、Quantity、PGI Date 與 Plant Group。</p></div>
+      <div class="card"><h3>多來源資料準備</h3><p>從 Open shipment / order data 取得交易明細，並從 SharePoint 取得價格檔，同時記錄檔案來源與版本，確保價格可追溯。</p></div>
       <div class="card"><h3>國家與價格群組</h3><p>依 Plant Group 判斷訂單屬於 US、CA 或 MX。US 與 CA 共用同一組價格規則，MX 使用另一組價格規則。</p></div>
       <div class="card"><h3>價格版本切換</h3><p>無論屬於 US、CA 或 MX，都需要再依月份區分歷史價格與現行價格；2024/11 以前與 2024/12 起使用不同版本。</p></div>
-      <div class="card"><h3>財務衍生與交付</h3><p>套用正確價格後，計算 Amount、Report Date、Aging 與 Aging Bucket，再產出明細、彙總與 Dashboard Data。</p></div>
+      <div class="card"><h3>資料落地與報表交付</h3><p>計算完成後寫入 DB，產生 Excel Detail / Summary，正式環境再上傳 Blob、同步 SharePoint 並寄送 Email。</p></div>
     </div>
   </section>
 
@@ -37,41 +37,40 @@
     <div class="mermaid-wrap"><pre class="mermaid">
 flowchart TD
     A[業務問題<br/>已出貨但尚未正常 Billing<br/>需要金額、帳齡與明細證據] --> B[月結觸發<br/>每月第一個工作日<br/>處理前一個月資料]
-    B --> C[擷取 Open shipment / order data]
-    C --> C1[選出計算與追蹤所需欄位<br/>Order / Delivery / Line / Part Number<br/>Qty / PGI Date / Plant Group]
 
+    B --> C[擷取 Open shipment / order data]
+    B --> SP[從 SharePoint 取得價格檔<br/>記錄來源、月份與版本]
+
+    C --> C1[選出計算與追蹤所需欄位<br/>Order / Delivery / Line / Part Number<br/>Qty / PGI Date / Plant Group]
     C1 --> D{依 Plant Group<br/>判斷國家}
+
     D -->|US / CA| E[使用 US / CA 價格群組]
     D -->|MX| F[使用 MX 價格群組]
     D -->|其他| X[標記 Unknown<br/>保留明細供檢查]
 
     E --> G{資料月份}
     F --> G
+    SP --> G
 
     G -->|2024/11 以前| H[使用歷史價格版本]
     G -->|2024/12 起| I[使用現行價格版本]
 
-    H --> J[依國家價格群組<br/>取得正確 Price]
+    H --> J[依國家價格群組與版本<br/>取得正確 Price]
     I --> J
     X --> K[異常資料處理]
 
     J --> L[計算 Billing Exposure<br/>Amount = Price x Quantity<br/>Report Date / Aging / Aging Bucket]
 
-    L --> M[產出可核對資料]
-    M --> M1[Detail Evidence]
-    M --> M2[Summary Evidence]
-    M --> M3[Dashboard Data]
+    L --> M[產出 Detail / Summary / Dashboard Data]
+    M --> DB[寫入 DB<br/>Detail Table / Dashboard Table]
+    M --> P[產生 Business Report<br/>Excel Detail / Summary]
+    K --> DB
 
-    M1 --> N[Load / Refresh]
-    M2 --> N
-    M3 --> N
-    K --> N
-
-    N --> O[更新 Detail / Dashboard Table]
-    O --> P[產生 Business Report<br/>Excel Detail / Summary]
     P --> Q{執行環境}
-    Q -->|Test| R[驗證資料與規則]
-    Q -->|Production| S[輸出報表與通知]
+    Q -->|Test| R[驗證資料、價格規則與報表結果]
+    Q -->|Production| S[上傳 Azure Blob]
+    S --> T[同步 SharePoint]
+    T --> U[寄送 Business Email]
     </pre></div>
   </section>
 </main>
