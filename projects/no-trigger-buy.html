@@ -19,13 +19,13 @@
 
   <section class="summary">
     <p><strong>業務問題：</strong>已出貨但尚未正常 Billing 的訂單，需要在月結時準確計算未開票金額、帳齡與可追溯明細。</p>
-    <p><strong>工程重點：</strong>依 Plant Group 判斷區域，再依月結月份選擇正確 Price Source，處理歷史與現行價格規則切換。</p>
+    <p><strong>工程重點：</strong>每月第一個工作日處理前一個月資料，擷取 Open shipment / order data 與計算所需欄位，再依 Plant Group、月份與 Price Source 規則完成計算。</p>
   </section>
 
   <section>
     <h2>核心複雜度</h2>
     <div class="grid">
-      <div class="card"><h3>資料範圍與可追溯性</h3><p>只納入 Open shipment / order data，保留 Order、Delivery、Line、Part Number、Quantity、PGI Date 與 Plant Group。</p></div>
+      <div class="card"><h3>資料準備與可追溯性</h3><p>從 Open shipment / order data 中選出 Billing 計算與後續追蹤所需欄位，包括 Order、Delivery、Line、Part Number、Quantity、PGI Date 與 Plant Group。</p></div>
       <div class="card"><h3>Plant / Region 規則</h3><p>不同 Plant Group 分別對應 Region A 與 Region B；未被規則涵蓋的資料標記為 Unknown，避免誤算。</p></div>
       <div class="card"><h3>價格版本切換</h3><p>歷史月份使用 Legacy Price Source；規則切換後依 Region 分流到不同的現行 Price Source。</p></div>
       <div class="card"><h3>財務衍生與交付</h3><p>計算 Report Date、Aging、Aging Bucket 與 Price × Quantity，產出明細、彙總與 Dashboard Data。</p></div>
@@ -36,12 +36,10 @@
     <h2>End-to-End Flow</h2>
     <div class="mermaid-wrap"><pre class="mermaid">
 flowchart TD
-    A[業務問題<br/>已出貨但尚未正常 Billing<br/>需要金額、帳齡與明細證據] --> B[月結觸發<br/>處理前一個月資料]
-    B --> C[定義資料範圍<br/>只納入 Open shipment / order data]
-    C --> C1[排除非本次月結資料]
-    C --> C2[保留可追溯欄位<br/>Order / Delivery / Line / Part Number / Qty / PGI Date / Plant Group]
+    A[業務問題<br/>已出貨但尚未正常 Billing<br/>需要金額、帳齡與明細證據] --> B[月結觸發<br/>每月第一個工作日<br/>處理前一個月資料]
+    B --> C[擷取 Open shipment / order data]
+    C --> C1[選出計算與追蹤所需欄位<br/>Order / Delivery / Line / Part Number<br/>Qty / PGI Date / Plant Group]
     C1 --> D[依 Plant Group<br/>判斷 Region / Site Group]
-    C2 --> D
     D --> D1[Plant Group A<br/>Region A / Site Group A]
     D --> D2[Plant Group B<br/>Region B / Site Group B]
     D --> D3[其他 Plant Group<br/>標記 Unknown]
