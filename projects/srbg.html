@@ -4,453 +4,67 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SRBG 資料平台與排程管理系統｜Jay Yu</title>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KCBL3WG2V3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-KCBL3WG2V3');
-  </script>
   <style>
-    :root {
-      --text: #1f2933;
-      --muted: #52606d;
-      --line: #d9e2ec;
-      --accent: #0f766e;
-      --accent-soft: #e6f4f1;
-      --paper: #ffffff;
-      --page: #f5f7fa;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: var(--page);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", "Segoe UI", sans-serif;
-      font-size: 14px;
-      line-height: 1.68;
-    }
-
-    main {
-      width: min(980px, calc(100% - 32px));
-      margin: 32px auto;
-      padding: 40px 48px;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
-    }
-
-    header {
-      padding-bottom: 22px;
-      border-bottom: 2px solid var(--accent);
-      margin-bottom: 24px;
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
-
-    h1 {
-      margin-bottom: 8px;
-      font-size: 30px;
-      line-height: 1.2;
-    }
-
-    h2 {
-      margin: 28px 0 12px;
-      color: var(--accent);
-      font-size: 18px;
-      line-height: 1.3;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 6px;
-    }
-
-    h3 {
-      margin: 18px 0 8px;
-      font-size: 15px;
-      line-height: 1.35;
-    }
-
-    p {
-      margin-bottom: 12px;
-    }
-
-    ul {
-      margin: 8px 0 0;
-      padding-left: 20px;
-    }
-
-    li + li {
-      margin-top: 5px;
-    }
-
-    a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 700;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .subtitle {
-      color: var(--accent);
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .meta {
-      color: var(--muted);
-    }
-
-    .summary {
-      padding: 14px 16px;
-      background: var(--accent-soft);
-      border-left: 4px solid var(--accent);
-      border-radius: 6px;
-      margin: 18px 0 24px;
-    }
-
-    .summary p:last-child {
-      margin-bottom: 0;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      padding: 5px 9px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #ffffff;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 12px;
-    }
-
-    .highlights {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 14px 16px;
-      background: #ffffff;
-    }
-
-    .card h3 {
-      color: var(--accent);
-      margin-top: 0;
-    }
-
-    .card p:last-child {
-      margin-bottom: 0;
-    }
-
-    .change-line {
-      margin-bottom: 10px;
-    }
-
-    .change-label {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 42px;
-      margin-right: 7px;
-      padding: 1px 6px;
-      border-radius: 999px;
-      background: #eef2f6;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .change-label.after {
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .metric {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 13px 14px;
-      background: #ffffff;
-    }
-
-    .metric strong {
-      display: block;
-      color: var(--accent);
-      font-size: 22px;
-      line-height: 1.15;
-      margin-bottom: 5px;
-    }
-
-    .metric span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .compact-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px 20px;
-      padding-left: 20px;
-    }
-
-    .mermaid-wrap {
-      margin-top: 14px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #ffffff;
-      overflow-x: auto;
-    }
-
-    @media (max-width: 720px) {
-      main {
-        width: 100%;
-        margin: 0;
-        padding: 28px 22px;
-        border-radius: 0;
-        border-left: 0;
-        border-right: 0;
-      }
-
-      .grid,
-      .compact-list {
-        grid-template-columns: 1fr;
-      }
-
-      .highlights {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 460px) {
-      .highlights {
-        grid-template-columns: 1fr;
-      }
-    }
+    :root{--text:#1f2933;--muted:#52606d;--line:#d9e2ec;--accent:#0f766e;--soft:#e6f4f1;--paper:#fff;--page:#f5f7fa}
+    *{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei","Segoe UI",sans-serif;font-size:14px;line-height:1.68}
+    main{width:min(980px,calc(100% - 32px));margin:32px auto;padding:40px 48px;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 18px 48px rgba(15,23,42,.08)}
+    header{padding-bottom:22px;border-bottom:2px solid var(--accent);margin-bottom:24px}h1,h2,h3,p{margin-top:0}h1{margin-bottom:8px;font-size:30px}h2{margin:28px 0 12px;color:var(--accent);font-size:18px;border-bottom:1px solid var(--line);padding-bottom:6px}h3{margin:0 0 8px;font-size:15px}p{margin-bottom:12px}a{color:var(--accent);text-decoration:none;font-weight:700}.subtitle{color:var(--accent);font-size:18px;font-weight:700;margin-bottom:10px}.meta{color:var(--muted)}
+    .summary{padding:14px 16px;background:var(--soft);border-left:4px solid var(--accent);border-radius:6px;margin:18px 0 24px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:#fff}.card h3{color:var(--accent)}.case{border-color:var(--accent);background:linear-gradient(135deg,var(--soft),#fff)}.button{display:inline-flex;margin-top:6px;padding:7px 11px;border-radius:6px;background:var(--accent);color:#fff}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.chip{padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--muted);font-size:12px;font-weight:700}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.metric{border:1px solid var(--line);border-radius:8px;padding:13px 14px}.metric strong{display:block;color:var(--accent);font-size:22px}.metric span{color:var(--muted);font-size:12px}
+    @media(max-width:720px){main{width:100%;margin:0;padding:28px 22px;border-radius:0}.grid,.metrics{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <main>
-    <header>
-      <h1>SRBG 資料平台與排程管理系統</h1>
-      <div class="subtitle">從分散 VM Cronjob 到可治理的 ETL Job Management Console</div>
-      <div class="meta"><a href="../index.html">← 回到履歷</a>｜<a href="../en/projects/srbg.html">English</a></div>
-    </header>
+<main>
+  <header>
+    <h1>SRBG 資料平台與排程管理系統</h1>
+    <div class="subtitle">從分散 VM Cronjob 到可治理的 ETL Job Management Console</div>
+    <div class="meta"><a href="../index.html">← 回到履歷</a>｜<a href="../en/projects/srbg.html">English</a></div>
+  </header>
 
-    <section class="summary">
-      <p>
-        這個專案的目的，是把事業群內分散在 VM Cronjob、DB、Log 與各產品線中的資料排程，整理成可監控、可重啟、可追蹤相依與成本的 ETL Job Management Console。
-      </p>
-      <div class="chips">
-        <span class="chip">ETL Job Management</span>
-        <span class="chip">Dependency Visualization</span>
-        <span class="chip">Restart / Step Restart</span>
-        <span class="chip">ADF / K8s Pod</span>
-        <span class="chip">Cost Analysis</span>
-      </div>
-    </section>
+  <section class="summary">
+    <p>把事業群內分散在 VM Cronjob、DB、Log 與各產品線中的資料排程，整理成可監控、可重啟、可追蹤相依與成本的 ETL Job Management Console。</p>
+    <div class="chips"><span class="chip">ETL Job Management</span><span class="chip">Dependency Visualization</span><span class="chip">Restart / Step Restart</span><span class="chip">ADF / K8s Pod</span><span class="chip">Cost Analysis</span></div>
+  </section>
 
-    <section>
-      <h2>這個專案在做什麼</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>排程治理入口</h3>
-          <p>把原本散在 VM、DB、Log 與各專案裡的排程狀態、執行紀錄與資料來源，集中到一個 Console。</p>
-        </div>
-        <div class="card">
-          <h3>失敗處理流程</h3>
-          <p>讓排程失敗後可以依照 failed restart、step restart、project restart 等流程處理，而不是完全依賴人工判斷。</p>
-        </div>
-        <div class="card">
-          <h3>相依與資料流</h3>
-          <p>把 parent-child dependency、loop check 與 downstream impact 平台化，讓異常來源與影響範圍更容易被定位。</p>
-        </div>
-        <div class="card">
-          <h3>執行架構轉換</h3>
-          <p>在不中斷既有排程的前提下，逐步把可轉換批次任務導向 ADF / K8s Pod，降低長期 VM Cronjob 維運壓力。</p>
-        </div>
-      </div>
-    </section>
+  <section>
+    <h2>代表性 ETL 案例</h2>
+    <div class="card case">
+      <h3>No Trigger Buy Billing ETL</h3>
+      <p>處理已出貨但尚未正常 Billing 的訂單，依 Plant / Region 與月結月份選擇正確 Price Source，計算未開票金額、Aging 與可追溯明細，再產出 Dashboard、Excel、Blob、SharePoint 與正式帳務報表。</p>
+      <p><strong>核心複雜度：</strong>2024/11 與 2024/12 Price Source Cutover、NA / MX 區域分流、Unknown Plant 與缺價資料防呆，以及 Detail / Summary / Dashboard 三種資料粒度。</p>
+      <a class="button" href="./no-trigger-buy.html">查看完整資料規則與流程圖 →</a>
+    </div>
+  </section>
 
-    <section>
-      <h2>Jay Yu 改變了什麼</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>從「查資料」變成「看平台」</h3>
-          <p class="change-line"><span class="change-label">原本</span>排程狀態散在 VM、DB、Log 與不同專案中，問題發生時要先花時間查任務跑到哪裡。</p>
-          <p class="change-line"><span class="change-label after">改變</span>RD / PM 可以從 Console 看到 batch 狀態、執行紀錄、資料來源與最近失敗點，討論焦點從「去哪查」變成「怎麼處理」。</p>
-        </div>
-        <div class="card">
-          <h3>從「人工重跑」變成「標準流程」</h3>
-          <p class="change-line"><span class="change-label">原本</span>任務失敗後，要靠 RD 判斷該重跑哪個步驟、哪些下游會受影響，處理方式容易因人而異。</p>
-          <p class="change-line"><span class="change-label after">改變</span>failed restart、step restart 與指定專案重啟被整理成一致操作流程，降低手動判斷與跨團隊確認成本。</p>
-        </div>
-        <div class="card">
-          <h3>從「人腦記相依」變成「平台追蹤」</h3>
-          <p class="change-line"><span class="change-label">原本</span>排程前後關係依賴文件、經驗或人工詢問；前置任務失敗時，下游影響範圍不容易快速確認。</p>
-          <p class="change-line"><span class="change-label after">改變</span>parent-child dependency tree、loop check 與 downstream impact 進入平台，異常來源與影響範圍可以被直接追蹤。</p>
-        </div>
-        <div class="card">
-          <h3>從「功能堆疊」變成「可交付平台」</h3>
-          <p class="change-line"><span class="change-label">原本</span>平台功能持續擴張，但品質檢查、部署流程與資源配置需要更穩定的工程基礎支撐。</p>
-          <p class="change-line"><span class="change-label after">改變</span>CI/CD、SonarQube、單元測試與 Terraform 進入交付流程，讓平台能持續演進而不是只交付一次性功能。</p>
-        </div>
-      </div>
-    </section>
+  <section>
+    <h2>這個專案在做什麼</h2>
+    <div class="grid">
+      <div class="card"><h3>排程治理入口</h3><p>將排程狀態、執行紀錄與資料來源集中到單一 Console。</p></div>
+      <div class="card"><h3>失敗處理流程</h3><p>支援 failed restart、step restart 與 project restart，降低人工判斷成本。</p></div>
+      <div class="card"><h3>相依與資料流</h3><p>將 dependency tree、loop check 與 downstream impact 平台化。</p></div>
+      <div class="card"><h3>執行架構轉換</h3><p>逐步將可轉換批次任務導向 ADF / K8s Pod，同時保留既有 VM Job。</p></div>
+    </div>
+  </section>
 
-    <section>
-      <h2>可被驗證的改變</h2>
-      <div class="highlights">
-        <div class="metric">
-          <strong>22</strong>
-          <span>內部專案使用或被平台支援</span>
-        </div>
-        <div class="metric">
-          <strong>100+</strong>
-          <span>使用者與多個 RD / PM 團隊</span>
-        </div>
-        <div class="metric">
-          <strong>3</strong>
-          <span>主要專案批次任務導入 ADF / K8s Pod</span>
-        </div>
-        <div class="metric">
-          <strong>CI/CD</strong>
-          <span>SonarQube、單元測試與 Terraform 導入</span>
-        </div>
-      </div>
-    </section>
+  <section>
+    <h2>工程貢獻</h2>
+    <div class="grid">
+      <div class="card"><h3>Batch Setting / Job Console</h3><p>參與 master / detail API、排程新增與編輯、DTO 檢核、狀態查詢、執行紀錄與資料來源追蹤。</p></div>
+      <div class="card"><h3>Dependency & Restart</h3><p>參與 dependency tree、loop check、failed restart、step restart 與指定專案重啟流程。</p></div>
+      <div class="card"><h3>ADF / Pod / VM 轉換</h3><p>協助批次任務遷移至 ADF / K8s Pod，並維持既有 VM 任務的管理能力。</p></div>
+      <div class="card"><h3>Quality / Delivery</h3><p>導入 CI/CD、SonarQube、單元測試與 Terraform。</p></div>
+    </div>
+  </section>
 
-    <section>
-      <h2>改變前的狀態</h2>
-      <ul class="compact-list">
-        <li>排程散在 VM、DB、Log 與各專案中，沒有單一入口能快速看全貌。</li>
-        <li>前置排程失敗時，下游影響範圍需要靠經驗與人工查詢判斷。</li>
-        <li>失敗重啟、指定步驟重跑、專案層級重啟缺乏一致操作流程。</li>
-        <li>部分任務仍在舊 VM / Cronjob 架構中，每天都在跑，不能用中斷式改造。</li>
-        <li>成本、事件、資料來源與排程歷程分散，RD 與使用者確認問題的成本偏高。</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>支撐這些改變的工程工作</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Batch Setting / Job Console</h3>
-          <p>參與 master / detail API、排程新增與編輯、DTO 檢核、狀態查詢、執行紀錄與資料來源追蹤。</p>
-        </div>
-        <div class="card">
-          <h3>Dependency & Restart</h3>
-          <p>參與 dependency tree、loop check、failed restart、step restart 與指定專案重啟流程。</p>
-        </div>
-        <div class="card">
-          <h3>ADF / Pod / VM 轉換</h3>
-          <p>協助可轉換的批次任務移往 ADF / K8s Pod，同時保留既有 VM 任務的管理與追蹤能力。</p>
-        </div>
-        <div class="card">
-          <h3>Quality / Delivery</h3>
-          <p>導入 CI/CD、SonarQube、單元測試與 Terraform，讓平台功能可被測試、部署與追蹤。</p>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>平台脈絡圖</h2>
-      <div class="mermaid-wrap">
-        <pre class="mermaid">
-flowchart LR
-  subgraph Before["原本：分散維運"]
-    VM["VM Cronjob"]
-    DB["排程設定 DB"]
-    Log["Log / 執行紀錄"]
-    Project["各專案處理邏輯"]
-  end
-
-  subgraph Console["ETL Job Management Console"]
-    Batch["Batch Setting"]
-    Status["Job Status / History"]
-    Dependency["Dependency Tree / Loop Check"]
-    Restart["Failed Restart / Step Restart"]
-    Cost["Cost / Source Trace"]
-  end
-
-  subgraph Runtime["執行方式"]
-    ADF["ADF"]
-    Pod["K8s Pod"]
-    VMKeep["Existing VM Jobs"]
-  end
-
-  subgraph Impact["影響"]
-    Projects["22 個內部專案"]
-    Users["100+ 使用者"]
-    Teams["RD / PM 團隊"]
-    Locate["更快定位異常來源"]
-  end
-
-  VM --> Batch
-  DB --> Status
-  Log --> Status
-  Project --> Dependency
-  Status --> Restart
-  Dependency --> Restart
-  Batch --> ADF
-  Batch --> Pod
-  Batch --> VMKeep
-  Cost --> Projects
-  Restart --> Users
-  Dependency --> Locate
-  Status --> Teams
-        </pre>
-      </div>
-    </section>
-
-    <section>
-      <h2>產出與影響</h2>
-      <ul class="compact-list">
-        <li>排程問題從「散在各處查」變成「從平台入口追蹤」。</li>
-        <li>失敗處理從「RD 人工判斷」變成「可重啟、可追蹤的一致流程」。</li>
-        <li>相依關係從「靠文件與經驗」變成「平台可視覺化」。</li>
-        <li>可轉換批次任務從 VM Cronjob 逐步遷移至 ADF / K8s Pod，降低長期維運壓力。</li>
-      </ul>
-    </section>
-  </main>
-
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
-  </script>
+  <section>
+    <h2>可被驗證的改變</h2>
+    <div class="metrics">
+      <div class="metric"><strong>22</strong><span>內部專案使用或被平台支援</span></div>
+      <div class="metric"><strong>100+</strong><span>使用者與多個 RD / PM 團隊</span></div>
+      <div class="metric"><strong>3</strong><span>主要專案導入 ADF / K8s Pod</span></div>
+      <div class="metric"><strong>CI/CD</strong><span>SonarQube、單元測試與 Terraform</span></div>
+    </div>
+  </section>
+</main>
 </body>
 </html>
